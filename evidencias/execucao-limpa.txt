@@ -1,0 +1,184 @@
+==========================================================
+ EVIDENCIA DE EXECUCAO - TAS Smart City / ResolveAi
+==========================================================
+Data......: 2026-09-08T01:03:16-03:00
+Node......: v24.20.0
+Alvo......: http://localhost:5000 (duplo de referencia do contrato)
+ATENCAO...: este NAO e o back-end Flask do Projeto Integrador.
+
+
+> tas-smart-city@1.0.0 diagnostico
+> node lib/diagnostico.js
+
+
+== Diagnostico da TAS =====================================
+Alvo (BASE_URL):   http://localhost:5000
+Rota de login:     /auth/login
+Rota de demandas:  /api/demandas
+Node:              v24.20.0
+-----------------------------------------------------------
+  OK   o alvo respondeu (401 em /api/demandas)
+       tipo de midia: application/json
+  OK   usuario de teste "cidadao" (ana@exemplo.com) -> 200
+  OK   usuario de teste "cidadaoSecundario" (bruno@exemplo.com) -> 200
+  OK   usuario de teste "gestor" (gestor@exemplo.com) -> 200
+  OK   usuario de teste "admin" (admin@exemplo.com) -> 200
+-----------------------------------------------------------
+Pronto para executar: npm test
+
+
+==========================================================
+ EXECUCAO 1 (limpa)
+==========================================================
+
+> tas-smart-city@1.0.0 test
+> node --test "tests/**/*.test.js"
+
+✔ CT C47 respostas de sucesso declaram content-type application/json (86.5659ms)
+✔ CT C48 respostas de erro tambem sao JSON, e nao HTML (2.7472ms)
+✔ CT C49 todo erro traz um code legivel por maquina (44.8991ms)
+✔ CT C50 rota inexistente responde 404 com corpo JSON padronizado (12.1435ms)
+✔ CT C51 metodo nao suportado responde 405, e nao 404 nem 500 (12.4915ms)
+✔ CT C52 corpo JSON malformado responde 400, e nao 500 (16.3304ms)
+✔ CT C53 nenhuma resposta da API vaza credencial em nenhuma rota verificada (84.2947ms)
+✔ CT C54 a API nao responde 5xx em nenhum dos caminhos verificados (79.5348ms)
+✔ HU-01 C13 cadastro com dados validos cria a conta (76.2373ms)
+✔ HU-01 C14 conta recem-criada consegue autenticar (10.2994ms)
+✔ HU-01 C15 e-mail ja cadastrado responde 409 (31.5121ms)
+✔ HU-01 C16 cadastro nao permite ao proprio usuario escolher o perfil (26.6526ms)
+✔ HU-01 C17 cadastro nao devolve a senha enviada (10.4391ms)
+✔ HU-01 C18 cadastro recusado: senha abaixo do minimo (2.5751ms)
+✔ HU-01 C18 cadastro recusado: e-mail sem formato valido (15.2233ms)
+✔ HU-01 C18 cadastro recusado: e-mail ausente (14.2595ms)
+✔ HU-01 C18 cadastro recusado: senha ausente (2.7082ms)
+✔ HU-01 C18 cadastro recusado: nome ausente (12.6602ms)
+✔ HU-02 C01 login com credenciais validas devolve access e refresh token (105.4906ms)
+✔ HU-02 C02 login com senha incorreta responde 401 (10.4985ms)
+✔ HU-02 C03 login de e-mail inexistente nao revela que a conta nao existe (6.4848ms)
+✔ HU-02 C04 login sem campos obrigatorios responde 400 apontando o campo (8.1095ms)
+✔ HU-02 C05 rota protegida sem token responde 401 (15.9136ms)
+✔ HU-02 C06 token inexistente responde 401 (4.8629ms)
+✔ HU-02 C07 header Authorization sem o esquema Bearer responde 401 (11.6654ms)
+✔ HU-02 C08 perfil autenticado devolve os dados do proprio usuario (17.4592ms)
+✔ HU-02 C09 nenhuma resposta de autenticacao vaza senha ou hash (29.39ms)
+✔ HU-02 C10 refresh token valido renova o access token (36.2921ms)
+✔ HU-02 C11 access token nao serve como refresh token (16.5856ms)
+✔ HU-02 C12 logout invalida o token usado na sessao (34.5239ms)
+✔ HU-03 A1-CITIZEN POST /api/demandas (registrar demanda) permite para CITIZEN (68.6342ms)
+✔ HU-03 A1-MANAGER POST /api/demandas (registrar demanda) recusa com 403 para MANAGER (7.7231ms)
+✔ HU-03 A1-ADMIN POST /api/demandas (registrar demanda) recusa com 403 para ADMIN (30.2807ms)
+✔ HU-03 A2-CITIZEN GET /api/demandas (listar) permite para CITIZEN (16.8479ms)
+✔ HU-03 A2-MANAGER GET /api/demandas (listar) permite para MANAGER (16.2081ms)
+✔ HU-03 A2-ADMIN GET /api/demandas (listar) permite para ADMIN (33.3446ms)
+✔ HU-03 A3-CITIZEN PATCH /api/demandas/{id} (status e prioridade) recusa com 403 para CITIZEN (36.4349ms)
+✔ HU-03 A3-MANAGER PATCH /api/demandas/{id} (status e prioridade) permite para MANAGER (30.8142ms)
+✔ HU-03 A4-CITIZEN PATCH /auth/update com role (promover usuario) recusa com 403 para CITIZEN (34.236ms)
+✔ HU-03 A4-MANAGER PATCH /auth/update com role (promover usuario) recusa com 403 para MANAGER (32.7578ms)
+✔ HU-03 A4-ADMIN PATCH /auth/update com role (promover usuario) permite para ADMIN (18.277ms)
+✔ HU-03 A5 demanda de terceiro responde 404 ao cidadao, e nao 403 (32.6077ms)
+  [PENDENCIA DE CONTRATO A3-admin] ADMIN pode atualizar status/prioridade de demanda, ou apenas promover usuarios?
+  [PENDENCIA DE CONTRATO A5-admin-delete] ADMIN pode excluir demanda concluida, ou a restricao do MANAGER tambem vale para ele?
+  [PENDENCIA DE CONTRATO A6-gestor-setor] Ha isolamento por setor entre gestores (cenario TS16 dos casos de teste da squad)? O README fala em "qualquer demanda", o que contradiz o isolamento por setor.
+✔ HU-03 A6 cidadao nao promove a si proprio a gestor (35.8447ms)
+✔ HU-03 pendencias de contrato nao resolvidas estao registradas, nao esquecidas (0.4794ms)
+✔ HU-06 C19 registro valido cria a demanda no status inicial (66.7292ms)
+✔ HU-06 C20 o protocolo segue o formato especificado (23.3308ms)
+✔ HU-06 C21 protocolos de demandas diferentes nao se repetem (19.6891ms)
+✔ HU-06 C22 registro sem autenticacao responde 401 (10.3248ms)
+✔ HU-06 C23 campos controlados pelo servidor sao ignorados no corpo (16.4145ms)
+✔ HU-06 C24 a autoria e atribuida ao usuario autenticado (17.1634ms)
+✔ HU-06 C25 registro recusado: categoria fora da lista fechada (31.9018ms)
+✔ HU-06 C25 registro recusado: descricao abaixo do minimo (6.2108ms)
+✔ HU-06 C25 registro recusado: descricao acima do maximo (11.7848ms)
+✔ HU-06 C25 registro recusado: latitude fora da faixa (5.7368ms)
+✔ HU-06 C25 registro recusado: longitude fora da faixa (4.5486ms)
+✔ HU-06 C25 registro recusado: regiao inexistente (27.6418ms)
+✔ HU-06 C25 registro recusado: categoria ausente (17.6664ms)
+✔ HU-06 C25 registro recusado: descricao ausente (29.0371ms)
+✔ HU-06 C25 registro recusado: corpo vazio (16.5344ms)
+✔ HU-06 C26 registro aceito no valor limite: descricao com exatamente 20 caracteres (29.6707ms)
+✔ HU-06 C26 registro aceito no valor limite: descricao com exatamente 1000 caracteres (17.7009ms)
+✔ HU-06 C26 registro aceito no valor limite: latitude no limite inferior da faixa (15.5412ms)
+✔ HU-09 C27 cidadao lista apenas as proprias demandas (121.7472ms)
+✔ HU-09 C28 gestor enxerga demandas de qualquer cidadao (19.8919ms)
+✔ HU-09 C29 a listagem devolve o bloco de paginacao do contrato (47.7344ms)
+✔ HU-09 C30 pageSize limita a quantidade de itens devolvidos (68.5477ms)
+✔ HU-12 C31 filtro por status devolve somente demandas naquele status (17.3304ms)
+✔ HU-12 C32 filtro por categoria devolve somente aquela categoria (16.6757ms)
+✔ HU-09 C33 demanda inexistente responde 404 (13.0035ms)
+✔ HU-09 C34 identificador malformado nao produz erro interno (15.956ms)
+✔ HU-09 C35 o detalhe da demanda expoe os campos do contrato (32.1062ms)
+✔ HU-13 C36 transicao RECEIVED -> RECEIVED e recusada com 409 (101.1551ms)
+✔ HU-13 C36 transicao RECEIVED -> UNDER_ANALYSIS e aceita (26.9985ms)
+✔ HU-13 C36 transicao RECEIVED -> IN_PROGRESS e recusada com 409 (55.0932ms)
+✔ HU-13 C36 transicao RECEIVED -> RESOLVED e recusada com 409 (49.9026ms)
+✔ HU-13 C36 transicao RECEIVED -> REJECTED e aceita (46.027ms)
+✔ HU-13 C36 transicao UNDER_ANALYSIS -> RECEIVED e recusada com 409 (51.8364ms)
+✔ HU-13 C36 transicao UNDER_ANALYSIS -> UNDER_ANALYSIS e recusada com 409 (55.4303ms)
+✔ HU-13 C36 transicao UNDER_ANALYSIS -> IN_PROGRESS e aceita (65.3649ms)
+✔ HU-13 C36 transicao UNDER_ANALYSIS -> RESOLVED e recusada com 409 (50.4463ms)
+✔ HU-13 C36 transicao UNDER_ANALYSIS -> REJECTED e aceita (80.9182ms)
+✔ HU-13 C36 transicao IN_PROGRESS -> RECEIVED e recusada com 409 (83.12ms)
+✔ HU-13 C36 transicao IN_PROGRESS -> UNDER_ANALYSIS e recusada com 409 (71.5732ms)
+✔ HU-13 C36 transicao IN_PROGRESS -> IN_PROGRESS e recusada com 409 (112.7463ms)
+✔ HU-13 C36 transicao IN_PROGRESS -> RESOLVED e aceita (84.2077ms)
+✔ HU-13 C36 transicao IN_PROGRESS -> REJECTED e recusada com 409 (115.7528ms)
+✔ HU-13 C36 transicao RESOLVED -> RECEIVED e recusada com 409 (109.8292ms)
+✔ HU-13 C36 transicao RESOLVED -> UNDER_ANALYSIS e recusada com 409 (87.7699ms)
+✔ HU-13 C36 transicao RESOLVED -> IN_PROGRESS e recusada com 409 (111.2181ms)
+✔ HU-13 C36 transicao RESOLVED -> RESOLVED e recusada com 409 (62.7187ms)
+✔ HU-13 C36 transicao RESOLVED -> REJECTED e recusada com 409 (95.3822ms)
+✔ HU-13 C36 transicao REJECTED -> RECEIVED e recusada com 409 (77.014ms)
+✔ HU-13 C36 transicao REJECTED -> UNDER_ANALYSIS e recusada com 409 (86.7739ms)
+✔ HU-13 C36 transicao REJECTED -> IN_PROGRESS e recusada com 409 (61.984ms)
+✔ HU-13 C36 transicao REJECTED -> RESOLVED e recusada com 409 (103.5758ms)
+✔ HU-13 C36 transicao REJECTED -> REJECTED e recusada com 409 (71.9854ms)
+✔ HU-13 C37 status fora da lista fechada responde 400, nao 409 (43.8287ms)
+✔ HU-13 C38 gestor atualiza a prioridade da demanda (54.4607ms)
+✔ HU-13 C39 prioridade fora da lista fechada responde 400 (47.6797ms)
+✔ HU-13 C40 a resolucao registra a data de conclusao (65.8709ms)
+✔ HU-14 C41 cidadao exclui a propria demanda enquanto ela esta pendente (104.61ms)
+✔ HU-14 C42 cidadao nao exclui a propria demanda depois de ela sair de pendente (24.0078ms)
+✔ HU-14 C43 cidadao nao exclui demanda de outro cidadao (60.3272ms)
+✔ HU-14 C44 gestor nao exclui demanda ja concluida (77.3491ms)
+✔ HU-14 C45 exclusao sem autenticacao responde 401 (11.8695ms)
+✔ HU-14 C46 exclusao de demanda inexistente responde 404 (11.9606ms)
+✔ TAS-01 a maquina de estados do contrato tem 25 pares e 5 transicoes validas (2.2699ms)
+✔ TAS-02 repetir o status atual e recusado em todos os estados (0.2185ms)
+✔ TAS-03 os estados finais nao tem transicao de saida (0.7952ms)
+✔ TAS-04 todo estado do contrato e alcancavel a partir do estado inicial (0.4913ms)
+✔ TAS-05 a massa de dados valida satisfaz todas as regras do contrato (0.2251ms)
+✔ TAS-06 valida() devolve uma instancia nova a cada chamada (0.143ms)
+✔ TAS-07 cada caso invalido aponta um campo que existe na massa valida (0.2639ms)
+✔ TAS-08 a matriz de autorizacao cobre os tres perfis e nao tem celula vazia (0.2729ms)
+ℹ tests 114
+ℹ suites 0
+ℹ pass 114
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3054.2776
+
+==========================================================
+ ESTABILIDADE - 3 reexecucoes consecutivas, sem alterar nada
+ (ambiente ja com estado acumulado da execucao 1)
+==========================================================
+
+--- reexecucao 2 ---
+ℹ tests 114
+ℹ pass 114
+ℹ fail 0
+ℹ duration_ms 2987.4331
+
+--- reexecucao 3 ---
+ℹ tests 114
+ℹ pass 114
+ℹ fail 0
+ℹ duration_ms 3035.6106
+
+--- reexecucao 4 ---
+ℹ tests 114
+ℹ pass 114
+ℹ fail 0
+ℹ duration_ms 3102.8499

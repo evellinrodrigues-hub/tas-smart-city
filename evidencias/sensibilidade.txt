@@ -1,0 +1,114 @@
+
+> tas-smart-city@1.0.0 sensibilidade
+> node scripts/sensibilidade.js
+
+
+== Verificacao de sensibilidade ===========================
+Alvo: http://localhost:5099 (duplo de referencia com defeito injetado)
+
+-> transicao-extra      detectado por 1 caso(s), incluindo o esperado
+-> role-do-cliente      detectado por 1 caso(s), incluindo o esperado
+-> 403-em-vez-de-404    detectado por 1 caso(s), incluindo o esperado
+-> vaza-senha           detectado por 3 caso(s), incluindo o esperado
+-> sem-code             detectado por 50 caso(s), incluindo o esperado
+-> status-inicial       detectado por 26 caso(s), incluindo o esperado
+
+== Detalhe ================================================
+
+[transicao-extra] abre a transicao IN_PROGRESS -> REJECTED, que o contrato recusa
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> REJECTED e recusada com 409
+
+[role-do-cliente] cadastro obedece ao campo role enviado pelo cliente
+   reprovou: HU-01 C16 cadastro nao permite ao proprio usuario escolher o perfil
+
+[403-em-vez-de-404] demanda de terceiro responde 403 e confirma que existe
+   reprovou: HU-03 A5 demanda de terceiro responde 404 ao cidadao, e nao 403
+
+[vaza-senha] respostas de usuario passam a incluir a senha
+   reprovou: CT C53 nenhuma resposta da API vaza credencial em nenhuma rota verificada
+   reprovou: HU-01 C17 cadastro nao devolve a senha enviada
+   reprovou: HU-02 C09 nenhuma resposta de autenticacao vaza senha ou hash
+
+[sem-code] respostas de erro perdem o campo code
+   reprovou: CT C49 todo erro traz um code legivel por maquina
+   reprovou: HU-01 C15 e-mail ja cadastrado responde 409
+   reprovou: HU-01 C18 cadastro recusado: senha abaixo do minimo
+   reprovou: HU-01 C18 cadastro recusado: e-mail sem formato valido
+   reprovou: HU-01 C18 cadastro recusado: e-mail ausente
+   reprovou: HU-01 C18 cadastro recusado: senha ausente
+   reprovou: HU-01 C18 cadastro recusado: nome ausente
+   reprovou: HU-02 C02 login com senha incorreta responde 401
+   reprovou: HU-02 C04 login sem campos obrigatorios responde 400 apontando o campo
+   reprovou: HU-02 C05 rota protegida sem token responde 401
+   reprovou: HU-03 A1-MANAGER POST /api/demandas (registrar demanda) recusa com 403 para MANAGER
+   reprovou: HU-03 A1-ADMIN POST /api/demandas (registrar demanda) recusa com 403 para ADMIN
+   reprovou: HU-03 A3-CITIZEN PATCH /api/demandas/{id} (status e prioridade) recusa com 403 para CITIZEN
+   reprovou: HU-03 A4-CITIZEN PATCH /auth/update com role (promover usuario) recusa com 403 para CITIZEN
+   reprovou: HU-03 A4-MANAGER PATCH /auth/update com role (promover usuario) recusa com 403 para MANAGER
+   reprovou: HU-03 A5 demanda de terceiro responde 404 ao cidadao, e nao 403
+   reprovou: HU-06 C22 registro sem autenticacao responde 401
+   reprovou: HU-06 C25 registro recusado: categoria fora da lista fechada
+   reprovou: HU-06 C25 registro recusado: descricao abaixo do minimo
+   reprovou: HU-06 C25 registro recusado: descricao acima do maximo
+   reprovou: HU-06 C25 registro recusado: latitude fora da faixa
+   reprovou: HU-06 C25 registro recusado: longitude fora da faixa
+   reprovou: HU-06 C25 registro recusado: regiao inexistente
+   reprovou: HU-06 C25 registro recusado: categoria ausente
+   reprovou: HU-06 C25 registro recusado: descricao ausente
+   reprovou: HU-06 C25 registro recusado: corpo vazio
+   reprovou: HU-09 C33 demanda inexistente responde 404
+   reprovou: HU-13 C36 transicao RECEIVED -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao RECEIVED -> IN_PROGRESS e recusada com 409
+   reprovou: HU-13 C36 transicao RECEIVED -> RESOLVED e recusada com 409
+   reprovou: HU-13 C36 transicao UNDER_ANALYSIS -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao UNDER_ANALYSIS -> UNDER_ANALYSIS e recusada com 409
+   reprovou: HU-13 C36 transicao UNDER_ANALYSIS -> RESOLVED e recusada com 409
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> UNDER_ANALYSIS e recusada com 409
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> IN_PROGRESS e recusada com 409
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> REJECTED e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> UNDER_ANALYSIS e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> IN_PROGRESS e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> RESOLVED e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> REJECTED e recusada com 409
+   reprovou: HU-13 C36 transicao REJECTED -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao REJECTED -> UNDER_ANALYSIS e recusada com 409
+   reprovou: HU-13 C36 transicao REJECTED -> IN_PROGRESS e recusada com 409
+   reprovou: HU-13 C36 transicao REJECTED -> RESOLVED e recusada com 409
+   reprovou: HU-13 C36 transicao REJECTED -> REJECTED e recusada com 409
+   reprovou: HU-13 C37 status fora da lista fechada responde 400, nao 409
+   reprovou: HU-13 C39 prioridade fora da lista fechada responde 400
+   reprovou: HU-14 C45 exclusao sem autenticacao responde 401
+
+[status-inicial] demanda nasce em UNDER_ANALYSIS em vez do status inicial
+   reprovou: HU-03 A3-MANAGER PATCH /api/demandas/{id} (status e prioridade) permite para MANAGER
+   reprovou: HU-06 C19 registro valido cria a demanda no status inicial
+   reprovou: HU-06 C23 campos controlados pelo servidor sao ignorados no corpo
+   reprovou: HU-13 C36 transicao RECEIVED -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao RECEIVED -> UNDER_ANALYSIS e aceita
+   reprovou: HU-13 C36 transicao RECEIVED -> IN_PROGRESS e recusada com 409
+   reprovou: HU-13 C36 transicao RECEIVED -> RESOLVED e recusada com 409
+   reprovou: HU-13 C36 transicao UNDER_ANALYSIS -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao UNDER_ANALYSIS -> UNDER_ANALYSIS e recusada com 409
+   reprovou: HU-13 C36 transicao UNDER_ANALYSIS -> IN_PROGRESS e aceita
+   reprovou: HU-13 C36 transicao UNDER_ANALYSIS -> RESOLVED e recusada com 409
+   reprovou: HU-13 C36 transicao UNDER_ANALYSIS -> REJECTED e aceita
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> UNDER_ANALYSIS e recusada com 409
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> IN_PROGRESS e recusada com 409
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> RESOLVED e aceita
+   reprovou: HU-13 C36 transicao IN_PROGRESS -> REJECTED e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> RECEIVED e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> UNDER_ANALYSIS e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> IN_PROGRESS e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> RESOLVED e recusada com 409
+   reprovou: HU-13 C36 transicao RESOLVED -> REJECTED e recusada com 409
+   reprovou: HU-13 C40 a resolucao registra a data de conclusao
+   reprovou: HU-14 C41 cidadao exclui a propria demanda enquanto ela esta pendente
+   reprovou: HU-14 C42 cidadao nao exclui a propria demanda depois de ela sair de pendente
+   reprovou: HU-14 C44 gestor nao exclui demanda ja concluida
+
+-----------------------------------------------------------
+Defeitos injetados: 6 | pontos cegos: 0
+

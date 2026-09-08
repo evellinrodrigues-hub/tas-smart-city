@@ -1,0 +1,73 @@
+name: testes
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+
+jobs:
+  # Estagio 1 e 2 da especificacao (docs/tas.md, secao 7).
+  # Gate de merge: nenhuma falha aqui.
+  unidade-e-api:
+    name: unidade e API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # A suite de unidade roda ANTES de qualquer servidor subir: e o gate mais
+      # barato da esteira, e falhar nele economiza todo o resto.
+      - name: verificacao da propria TAS (sem rede)
+        run: node --test "tests/unidade/**/*.test.js"
+
+      - name: sobe o alvo
+        # Contra o back-end real da squad, troque esta linha pelo comando que
+        # sobe o Flask. O duplo de referencia esta aqui para que a esteira
+        # tenha um alvo enquanto essa integracao nao existe — e suite verde
+        # contra ele NAO e evidencia sobre o produto.
+        run: node sut-referencia/server.js &
+
+      - name: aguarda o alvo responder
+        # Subir o servidor e chama-lo na linha seguinte e uma corrida que se
+        # perde de vez em quando, e perder de vez em quando e a definicao de
+        # teste intermitente. Espera por condicao, nunca por tempo fixo.
+        run: |
+          for i in $(seq 1 60); do
+            if curl -s -o /dev/null http://localhost:5000/api/demandas; then
+              echo "alvo respondeu apos $i tentativa(s)"; exit 0
+            fi
+            sleep 0.5
+          done
+          echo "o alvo nao respondeu em 30s"; exit 1
+
+      - name: suite de API
+        env:
+          BASE_URL: http://localhost:5000
+        run: npm run test:relatorio
+
+      - name: publica evidencias
+        # if: always() e o detalhe mais importante do arquivo. Sem ele, os
+        # artefatos so sao publicados quando tudo passa, exatamente quando
+        # menos precisamos deles.
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencias-execucao
+          path: evidencias/
+
+  # A suite tem que saber ficar vermelha. Este job injeta defeitos conhecidos
+  # e reprova se algum deles passar despercebido por todos os casos.
+  sensibilidade:
+    name: verificacao de sensibilidade
+    needs: unidade-e-api
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: injeta defeitos conhecidos e confere a deteccao
+        run: npm run sensibilidade

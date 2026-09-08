@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="CT C47 respostas de sucesso declaram content-type application/json" time="0.079608" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\contrato-transversal.test.js"/>
+	<testcase name="CT C48 respostas de erro tambem sao JSON, e nao HTML" time="0.002540" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\contrato-transversal.test.js"/>
+	<testcase name="CT C49 todo erro traz um code legivel por maquina" time="0.044509" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\contrato-transversal.test.js"/>
+	<testcase name="CT C50 rota inexistente responde 404 com corpo JSON padronizado" time="0.005112" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\contrato-transversal.test.js"/>
+	<testcase name="CT C51 metodo nao suportado responde 405, e nao 404 nem 500" time="0.013544" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\contrato-transversal.test.js"/>
+	<testcase name="CT C52 corpo JSON malformado responde 400, e nao 500" time="0.015344" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\contrato-transversal.test.js"/>
+	<testcase name="CT C53 nenhuma resposta da API vaza credencial em nenhuma rota verificada" time="0.065868" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\contrato-transversal.test.js"/>
+	<testcase name="CT C54 a API nao responde 5xx em nenhum dos caminhos verificados" time="0.081217" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\contrato-transversal.test.js"/>
+	<testcase name="HU-01 C13 cadastro com dados validos cria a conta" time="0.072202" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C14 conta recem-criada consegue autenticar" time="0.016335" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C15 e-mail ja cadastrado responde 409" time="0.016767" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C16 cadastro nao permite ao proprio usuario escolher o perfil" time="0.043777" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C17 cadastro nao devolve a senha enviada" time="0.004955" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C18 cadastro recusado: senha abaixo do minimo" time="0.017814" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C18 cadastro recusado: e-mail sem formato valido" time="0.015338" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C18 cadastro recusado: e-mail ausente" time="0.003342" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C18 cadastro recusado: senha ausente" time="0.001478" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-01 C18 cadastro recusado: nome ausente" time="0.012784" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu01-cadastro.test.js"/>
+	<testcase name="HU-02 C01 login com credenciais validas devolve access e refresh token" time="0.088317" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C02 login com senha incorreta responde 401" time="0.004616" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C03 login de e-mail inexistente nao revela que a conta nao existe" time="0.021541" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C04 login sem campos obrigatorios responde 400 apontando o campo" time="0.002750" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C05 rota protegida sem token responde 401" time="0.012683" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C06 token inexistente responde 401" time="0.016503" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C07 header Authorization sem o esquema Bearer responde 401" time="0.015668" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C08 perfil autenticado devolve os dados do proprio usuario" time="0.017612" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C09 nenhuma resposta de autenticacao vaza senha ou hash" time="0.033518" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C10 refresh token valido renova o access token" time="0.032245" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C11 access token nao serve como refresh token" time="0.030867" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-02 C12 logout invalida o token usado na sessao" time="0.022399" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu02-autenticacao.test.js"/>
+	<testcase name="HU-03 A1-CITIZEN POST /api/demandas (registrar demanda) permite para CITIZEN" time="0.077466" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A1-MANAGER POST /api/demandas (registrar demanda) recusa com 403 para MANAGER" time="0.022679" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A1-ADMIN POST /api/demandas (registrar demanda) recusa com 403 para ADMIN" time="0.015048" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A2-CITIZEN GET /api/demandas (listar) permite para CITIZEN" time="0.015667" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A2-MANAGER GET /api/demandas (listar) permite para MANAGER" time="0.033255" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A2-ADMIN GET /api/demandas (listar) permite para ADMIN" time="0.016723" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A3-CITIZEN PATCH /api/demandas/{id} (status e prioridade) recusa com 403 para CITIZEN" time="0.052077" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A3-MANAGER PATCH /api/demandas/{id} (status e prioridade) permite para MANAGER" time="0.032455" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A4-CITIZEN PATCH /auth/update com role (promover usuario) recusa com 403 para CITIZEN" time="0.031054" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A4-MANAGER PATCH /auth/update com role (promover usuario) recusa com 403 para MANAGER" time="0.006609" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A4-ADMIN PATCH /auth/update com role (promover usuario) permite para ADMIN" time="0.029549" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A5 demanda de terceiro responde 404 ao cidadao, e nao 403" time="0.033215" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 A6 cidadao nao promove a si proprio a gestor" time="0.048781" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-03 pendencias de contrato nao resolvidas estao registradas, nao esquecidas" time="0.000392" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu03-autorizacao.test.js"/>
+	<testcase name="HU-06 C19 registro valido cria a demanda no status inicial" time="0.077169" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C20 o protocolo segue o formato especificado" time="0.012104" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C21 protocolos de demandas diferentes nao se repetem" time="0.034231" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C22 registro sem autenticacao responde 401" time="0.005969" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C23 campos controlados pelo servidor sao ignorados no corpo" time="0.014668" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C24 a autoria e atribuida ao usuario autenticado" time="0.026489" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: categoria fora da lista fechada" time="0.019297" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: descricao abaixo do minimo" time="0.020729" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: descricao acima do maximo" time="0.014132" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: latitude fora da faixa" time="0.013507" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: longitude fora da faixa" time="0.017221" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: regiao inexistente" time="0.033980" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: categoria ausente" time="0.015053" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: descricao ausente" time="0.004921" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C25 registro recusado: corpo vazio" time="0.015847" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C26 registro aceito no valor limite: descricao com exatamente 20 caracteres" time="0.015407" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C26 registro aceito no valor limite: descricao com exatamente 1000 caracteres" time="0.031157" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-06 C26 registro aceito no valor limite: latitude no limite inferior da faixa" time="0.031919" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu06-registro-demanda.test.js"/>
+	<testcase name="HU-09 C27 cidadao lista apenas as proprias demandas" time="0.123991" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-09 C28 gestor enxerga demandas de qualquer cidadao" time="0.026427" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-09 C29 a listagem devolve o bloco de paginacao do contrato" time="0.023954" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-09 C30 pageSize limita a quantidade de itens devolvidos" time="0.043453" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-12 C31 filtro por status devolve somente demandas naquele status" time="0.050618" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-12 C32 filtro por categoria devolve somente aquela categoria" time="0.067307" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-09 C33 demanda inexistente responde 404" time="0.031725" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-09 C34 identificador malformado nao produz erro interno" time="0.018523" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-09 C35 o detalhe da demanda expoe os campos do contrato" time="0.060487" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu09-consulta-demandas.test.js"/>
+	<testcase name="HU-13 C36 transicao RECEIVED -> RECEIVED e recusada com 409" time="0.105212" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RECEIVED -> UNDER_ANALYSIS e aceita" time="0.032128" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RECEIVED -> IN_PROGRESS e recusada com 409" time="0.060825" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RECEIVED -> RESOLVED e recusada com 409" time="0.073917" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RECEIVED -> REJECTED e aceita" time="0.047070" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao UNDER_ANALYSIS -> RECEIVED e recusada com 409" time="0.102736" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao UNDER_ANALYSIS -> UNDER_ANALYSIS e recusada com 409" time="0.082730" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao UNDER_ANALYSIS -> IN_PROGRESS e aceita" time="0.053829" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao UNDER_ANALYSIS -> RESOLVED e recusada com 409" time="0.063334" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao UNDER_ANALYSIS -> REJECTED e aceita" time="0.063084" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao IN_PROGRESS -> RECEIVED e recusada com 409" time="0.115085" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao IN_PROGRESS -> UNDER_ANALYSIS e recusada com 409" time="0.083324" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao IN_PROGRESS -> IN_PROGRESS e recusada com 409" time="0.072425" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao IN_PROGRESS -> RESOLVED e aceita" time="0.079747" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao IN_PROGRESS -> REJECTED e recusada com 409" time="0.099352" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RESOLVED -> RECEIVED e recusada com 409" time="0.103587" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RESOLVED -> UNDER_ANALYSIS e recusada com 409" time="0.097324" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RESOLVED -> IN_PROGRESS e recusada com 409" time="0.101885" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RESOLVED -> RESOLVED e recusada com 409" time="0.051223" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao RESOLVED -> REJECTED e recusada com 409" time="0.128754" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao REJECTED -> RECEIVED e recusada com 409" time="0.085548" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao REJECTED -> UNDER_ANALYSIS e recusada com 409" time="0.063064" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao REJECTED -> IN_PROGRESS e recusada com 409" time="0.069011" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao REJECTED -> RESOLVED e recusada com 409" time="0.082592" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C36 transicao REJECTED -> REJECTED e recusada com 409" time="0.034723" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C37 status fora da lista fechada responde 400, nao 409" time="0.032025" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C38 gestor atualiza a prioridade da demanda" time="0.052007" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C39 prioridade fora da lista fechada responde 400" time="0.062109" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-13 C40 a resolucao registra a data de conclusao" time="0.102256" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu13-atualizacao-status.test.js"/>
+	<testcase name="HU-14 C41 cidadao exclui a propria demanda enquanto ela esta pendente" time="0.090501" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu14-exclusao-demanda.test.js"/>
+	<testcase name="HU-14 C42 cidadao nao exclui a propria demanda depois de ela sair de pendente" time="0.037652" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu14-exclusao-demanda.test.js"/>
+	<testcase name="HU-14 C43 cidadao nao exclui demanda de outro cidadao" time="0.062632" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu14-exclusao-demanda.test.js"/>
+	<testcase name="HU-14 C44 gestor nao exclui demanda ja concluida" time="0.075010" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu14-exclusao-demanda.test.js"/>
+	<testcase name="HU-14 C45 exclusao sem autenticacao responde 401" time="0.025979" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu14-exclusao-demanda.test.js"/>
+	<testcase name="HU-14 C46 exclusao de demanda inexistente responde 404" time="0.032709" classname="test" file="C:\Users\EV\tas-smart-city\tests\api\hu14-exclusao-demanda.test.js"/>
+	<testcase name="TAS-01 a maquina de estados do contrato tem 25 pares e 5 transicoes validas" time="0.003629" classname="test" file="C:\Users\EV\tas-smart-city\tests\unidade\oraculo.test.js"/>
+	<testcase name="TAS-02 repetir o status atual e recusado em todos os estados" time="0.000440" classname="test" file="C:\Users\EV\tas-smart-city\tests\unidade\oraculo.test.js"/>
+	<testcase name="TAS-03 os estados finais nao tem transicao de saida" time="0.000867" classname="test" file="C:\Users\EV\tas-smart-city\tests\unidade\oraculo.test.js"/>
+	<testcase name="TAS-04 todo estado do contrato e alcancavel a partir do estado inicial" time="0.000495" classname="test" file="C:\Users\EV\tas-smart-city\tests\unidade\oraculo.test.js"/>
+	<testcase name="TAS-05 a massa de dados valida satisfaz todas as regras do contrato" time="0.000234" classname="test" file="C:\Users\EV\tas-smart-city\tests\unidade\oraculo.test.js"/>
+	<testcase name="TAS-06 valida() devolve uma instancia nova a cada chamada" time="0.000142" classname="test" file="C:\Users\EV\tas-smart-city\tests\unidade\oraculo.test.js"/>
+	<testcase name="TAS-07 cada caso invalido aponta um campo que existe na massa valida" time="0.000277" classname="test" file="C:\Users\EV\tas-smart-city\tests\unidade\oraculo.test.js"/>
+	<testcase name="TAS-08 a matriz de autorizacao cobre os tres perfis e nao tem celula vazia" time="0.000254" classname="test" file="C:\Users\EV\tas-smart-city\tests\unidade\oraculo.test.js"/>
+	<!-- tests 114 -->
+	<!-- suites 0 -->
+	<!-- pass 114 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 3127.8089 -->
+</testsuites>

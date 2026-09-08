@@ -1,0 +1,19 @@
+{
+  "name": "tas-smart-city",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Test Automation Solution (TAS) de API para o SUT Smart City / ResolveAi - ADS033 2026.2",
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\"",
+    "test:api": "node --test \"tests/api/**/*.test.js\"",
+    "test:unidade": "node --test \"tests/unidade/**/*.test.js\"",
+    "test:relatorio": "node --test --test-reporter=spec --test-reporter-destination=stdout --test-reporter=junit --test-reporter-destination=evidencias/resultado.xml \"tests/**/*.test.js\"",
+    "sut:referencia": "node sut-referencia/server.js",
+    "diagnostico": "node lib/diagnostico.js",
+    "sensibilidade": "node scripts/sensibilidade.js"
+  },
+  "license": "UNLICENSED"
+}
