@@ -11,7 +11,7 @@
 
 | Campo | Conteúdo |
 | :--- | :--- |
-| **SUT** | API REST do Projeto Integrador **Smart City / ResolveAí** — back-end Flask/PostgreSQL, compartilhado entre o cliente web e o app mobile. |
+| **SUT** | API REST do Projeto Integrador ** ResolveAí** — back-end Flask/PostgreSQL, compartilhado entre o cliente web e o app mobile. |
 | **Repositório de referência do produto** | https://github.com/PetersonNave/Smart-City (cliente mobile Expo/React Native, que consome a mesma API) |
 | **Documentação do contrato** | README do repositório acima, seções 6 a 8. A documentação Postman (`view/47073825/2sBXwvHTeT`) é renderizada por JavaScript e **não expõe o contrato** — ver seção 7. |
 | **Nível de teste** | Sistema / serviço (API) |
