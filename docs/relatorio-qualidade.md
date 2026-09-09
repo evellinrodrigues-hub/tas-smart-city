@@ -13,7 +13,8 @@
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `unidade` (verificação da TAS) | — (sem rede) | 8 | 8 | 0 | 100% |
 | `api` | duplo de referência | 98 | 98 | 0 | 100% |
-| `api` | **back-end real (Flask)** | 98 | **49** | **49** | **~50%** |
+| `api` | **back-end real (Flask)** | 98 | **42** | **56** | **~43%** |
+| **Total** | back-end real | **106** | **50** | **56** | **~47%** |
 
 A suíte foi ajustada nesta entrega para falar com o back-end real (ver seção 2)
 depois que a primeira tentativa mostrou uma incompatibilidade total de formato
@@ -47,15 +48,17 @@ a distinção `[A]`/`[B]`/`[C]`):
 | Cadastro | campo `name`, senha mín. 8 | campo `username`, senha mín. 6 |
 | Paginação (parâmetro) | `pageSize` | `per_page` |
 
-Depois do ajuste, a suíte passou de 26/114 para **49/106** (o total de casos
+Depois do ajuste, a suíte passou de 26/114 para **50/106** (o total de casos
 caiu de 114 para 106 porque o modelo de 4 estados tem 16 pares de transição, e
 não 25). Os 57 casos que ainda reprovavam foram revisados um a um contra o
 código-fonte do back-end (`ndrfelipe/smart-city`) para separar **defeito real
 da API** de **hipótese de contrato ainda não confirmada**. Um ajuste adicional
 (usar `role: 'gestor'` em vez de `'admin'` no caso de escalonamento de
 privilégio de cadastro — `'admin'` nem é um valor aceito pelo schema de
-registro real) deve elevar o número de aprovados na próxima execução; o valor
-final está registrado em `evidencias/`.
+registro real) corrigiu mais 1 caso, chegando ao número final registrado em
+`evidencias/resultado-backend-real.txt`: **50 aprovados, 56 reprovados**, dos
+106 casos totais (98 de API + 8 de verificação da própria TAS, que não
+depende de rede e continua 8/8).
 
 **Importante sobre método**: o ajuste acima ficou estritamente no nível de
 **formato** (nomes de campo, enums de valor aceitos, limites de tamanho) —

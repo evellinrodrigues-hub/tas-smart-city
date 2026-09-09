@@ -166,7 +166,7 @@ havia sido construído a partir do SUT didático da disciplina, e a API real do
 Smart City usa um formato de payload totalmente diferente (campos em
 português, 4 estados em vez de 5, perfis em minúsculo). Depois de ajustar a
 suíte a esse formato — sem tocar em nenhuma regra de negócio sob teste — o
-resultado foi 49/106, com a outra metade das reprovações sendo achado real,
+resultado foi 50/106, com a outra metade das reprovações sendo achado real,
 não bug da suíte.
 
 **2. Oito defeitos de severidade alta foram encontrados, três com implicação
