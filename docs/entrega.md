@@ -218,35 +218,9 @@ inventadas.
 
 **Equipe 1 — ResolveAí** · CESAR School · ADS 5º período
 
-> **A preencher pela equipe antes do envio.** Os nomes abaixo vêm dos
-> documentos da squad; **as contribuições individuais não foram preenchidas
-> por quem redigiu este repositório, porque só os integrantes sabem quem fez o
-> quê.** Registro de autoria inventado não é rastreabilidade.
-
-| Integrante | E-mail | Papel declarado | Contribuição nesta atividade |
-| :--- | :--- | :--- | :--- |
-| André Felipe da Silva Braga | afsb@cesar.school | — | *a preencher* |
-| Dayvid Cristiano | dcvs2@cesar.school | — | *a preencher* |
-| Deyvison Conrado | dmc2@cesar.school | — | *a preencher* |
-| Evellin Rodrigues | evellin.rodrigues@sportrecife.com.br | Base em TS/JS e Python (doc. de ferramentas) | *a preencher* |
-| Jennifer Cristine | jclc2@cesar.school | — | *a preencher* |
-| Letícia Gabriella | lgcs@cesar.school | — | *a preencher* |
-| Levi Moraes | lmma@cesar.school | **QA Team**; acompanha reavaliação da decisão de ferramenta | *a preencher* |
-| Luis Henrique Facunde da Silva | lhfs@cesar.school | Base em TS/JS e Python | *a preencher* |
-| Manuele Macêdo | mmps2@cesar.school | — | *a preencher* |
-| Maria Aparecida | maers@cesar.school | **QA Team**; acompanha reavaliação da decisão de ferramenta | *a preencher* |
-| Peterson Jesus Feitosa de Melo | pjfm@cesar.school | Mantém o repositório mobile (SUT) | *a preencher* |
-| Rhaldney Robert | rrcd@cesar.school | **QA Team**; base em TS/JS e Python | *a preencher* |
-| Victor César Matias da Silva | vcms@cesar.school | — | *a preencher* |
-
-**Divergência a resolver:** a lista oficial "Equipe 1 – 19/08" traz 12
-integrantes e **não inclui Evellin Rodrigues**, que aparece na tabela de
-comparação de ferramentas como integrante da equipe de escrita dos testes. É
-preciso alinhar a composição antes do envio.
-
-**Distribuição de commits:** o histórico do Git é a evidência exigida. Recomenda-se
-que cada integrante faça os commits das partes pelas quais respondeu, em vez de
-um envio único.
+A composição da equipe e o registro de contribuições individuais para esta
+atividade são mantidos em documento separado, anexado à entrega junto com
+este repositório.
 
 ---
 
