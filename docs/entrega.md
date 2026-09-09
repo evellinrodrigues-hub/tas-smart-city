@@ -52,9 +52,9 @@ ver seção 6 e `docs/relatorio-qualidade.md`.)
 | HU-02 Autenticação e sessão | 12 | login, token, refresh, logout, enumeração de contas |
 | HU-01 Autocadastro | 10 | validações, e-mail duplicado, **escalonamento de privilégio** |
 | HU-03 Autorização por perfil | 14 | matriz rota × perfil, **403 × 404**, autopromoção |
-| HU-06 Registro de demanda | 18 | caminho feliz, **mass assignment**, 9 validações, 3 valores limite |
+| HU-06 Registro de demanda | 19 | caminho feliz, **mass assignment**, 10 validações, 3 valores limite |
 | HU-09/12 Consulta e filtros | 9 | **isolamento entre cidadãos**, paginação, filtros |
-| HU-13 Atualização de status | 29 | **os 25 pares da máquina de estados**, prioridade |
+| HU-13 Atualização de status | 20 | **os 16 pares da máquina de estados**, prioridade |
 | HU-14 Exclusão | 6 | restrição por estado e por autoria |
 | Contrato transversal | 8 | mídia, `code`, 405, corpo malformado, vazamento, 5xx |
 | Verificação da TAS | 8 | coerência do próprio oráculo, sem rede |
@@ -63,7 +63,7 @@ ver seção 6 e `docs/relatorio-qualidade.md`.)
 
 - **Fluxos esperados** — caminho feliz de cada endpoint.
 - **Erro e exceção** — 400, 401, 403, 404, 405, 409; corpo malformado; id malformado; 5xx como achado.
-- **Casos de borda** — valor limite inclusivo (descrição de 20 e 1000 caracteres, latitude −90); repetição do status atual; protocolos duplicados; token trocado entre access e refresh.
+- **Casos de borda** — valor limite inclusivo (descrição de 10 e 500 caracteres, localização com 3 caracteres); repetição do status atual; protocolos duplicados; token trocado entre access e refresh.
 - **Condições negativas de segurança** — escalonamento de privilégio no cadastro, autopromoção, mass assignment, enumeração de contas por resposta de login, enumeração de recursos por 403, vazamento de credencial em qualquer rota.
 
 ---
