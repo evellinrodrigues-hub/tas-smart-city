@@ -5,20 +5,34 @@
  * objeto compartilhado pode ser modificado por um teste e contaminar os
  * demais, produzindo falhas que dependem da ordem de execucao. A funcao
  * devolve um objeto novo a cada chamada.
+ *
+ * Nomes de campo em portugues (titulo/descricao/categoria/localizacao/
+ * prioridade): confirmado em schemas/demandas_schema.py do back-end real [C]
+ * em data/contrato.js. O README do produto so documenta rotas e perfis, nunca
+ * o payload - ver contrato.js para a proveniencia completa.
  */
 
 const contrato = require('./contrato');
 
+/**
+ * Titulo unico por chamada. O back-end real recusa titulo duplicado (409/422
+ * "Ja existe uma demanda com este titulo"); sem isso, a segunda chamada de
+ * `valida()` numa mesma execucao colidiria com a primeira.
+ */
+const tituloNovo = () => `Buraco na via ${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
 /** Demanda que satisfaz todas as regras do contrato. */
 const valida = () => ({
-  category: contrato.CATEGORIAS[0],
-  description: 'Buraco de grande porte na pista da direita, proximo ao cruzamento.',
-  location: { latitude: -8.0578, longitude: -34.8829, region: 'RPA_3' },
+  titulo: tituloNovo(),
+  categoria: contrato.CATEGORIAS[0],
+  descricao: 'Buraco de grande porte na pista da direita, proximo ao cruzamento.',
+  localizacao: 'Rua das Flores, 123 - Bairro Boa Viagem',
+  prioridade: contrato.PRIORIDADES[0],
 });
 
 /**
  * Produz variantes sem repetir os campos validos.
- * com({ category: 'BURACO' }) e a demanda valida com uma categoria invalida.
+ * com({ categoria: 'BURACO' }) e a demanda valida com uma categoria invalida.
  */
 const com = extra => ({ ...valida(), ...extra });
 
@@ -29,8 +43,8 @@ const sem = campo => {
   return d;
 };
 
-/** Descricao com exatamente `n` caracteres, para testar valor limite. */
-const descricaoCom = n => 'a'.repeat(n);
+/** Texto com exatamente `n` caracteres, para testar valor limite. */
+const textoCom = n => 'a'.repeat(n);
 
 /**
  * Casos invalidos rastreaveis: cada entrada declara o campo que a API deve
@@ -40,48 +54,53 @@ const descricaoCom = n => 'a'.repeat(n);
 const invalidas = () => [
   {
     nome: 'categoria fora da lista fechada',
-    corpo: com({ category: 'BURACO' }),
-    campoEsperado: 'category',
+    corpo: com({ categoria: 'BURACO' }),
+    campoEsperado: 'categoria',
   },
   {
     nome: 'descricao abaixo do minimo',
-    corpo: com({ description: descricaoCom(contrato.LIMITES.descricaoMin - 1) }),
-    campoEsperado: 'description',
+    corpo: com({ descricao: textoCom(contrato.LIMITES.descricaoMin - 1) }),
+    campoEsperado: 'descricao',
   },
   {
     nome: 'descricao acima do maximo',
-    corpo: com({ description: descricaoCom(contrato.LIMITES.descricaoMax + 1) }),
-    campoEsperado: 'description',
+    corpo: com({ descricao: textoCom(contrato.LIMITES.descricaoMax + 1) }),
+    campoEsperado: 'descricao',
   },
   {
-    nome: 'latitude fora da faixa',
-    corpo: com({ location: { latitude: 999, longitude: -34.8829, region: 'RPA_3' } }),
-    campoEsperado: 'location.latitude',
+    nome: 'localizacao abaixo do minimo',
+    corpo: com({ localizacao: textoCom(contrato.LIMITES.localizacaoMin - 1) }),
+    campoEsperado: 'localizacao',
   },
   {
-    nome: 'longitude fora da faixa',
-    corpo: com({ location: { latitude: -8.0578, longitude: 999, region: 'RPA_3' } }),
-    campoEsperado: 'location.longitude',
+    nome: 'prioridade fora da lista fechada',
+    corpo: com({ prioridade: 'agora-mesmo' }),
+    campoEsperado: 'prioridade',
   },
   {
-    nome: 'regiao inexistente',
-    corpo: com({ location: { latitude: -8.0578, longitude: -34.8829, region: 'RPA_99' } }),
-    campoEsperado: 'location.region',
+    nome: 'titulo abaixo do minimo',
+    corpo: com({ titulo: textoCom(contrato.LIMITES.tituloMin - 1) }),
+    campoEsperado: 'titulo',
   },
   {
     nome: 'categoria ausente',
-    corpo: sem('category'),
-    campoEsperado: 'category',
+    corpo: sem('categoria'),
+    campoEsperado: 'categoria',
   },
   {
     nome: 'descricao ausente',
-    corpo: sem('description'),
-    campoEsperado: 'description',
+    corpo: sem('descricao'),
+    campoEsperado: 'descricao',
+  },
+  {
+    nome: 'titulo ausente',
+    corpo: sem('titulo'),
+    campoEsperado: 'titulo',
   },
   {
     nome: 'corpo vazio',
     corpo: {},
-    campoEsperado: 'category',
+    campoEsperado: 'titulo',
   },
 ];
 
@@ -89,18 +108,16 @@ const invalidas = () => [
 const limitesAceitos = () => [
   {
     nome: `descricao com exatamente ${contrato.LIMITES.descricaoMin} caracteres`,
-    corpo: com({ description: descricaoCom(contrato.LIMITES.descricaoMin) }),
+    corpo: com({ descricao: textoCom(contrato.LIMITES.descricaoMin) }),
   },
   {
     nome: `descricao com exatamente ${contrato.LIMITES.descricaoMax} caracteres`,
-    corpo: com({ description: descricaoCom(contrato.LIMITES.descricaoMax) }),
+    corpo: com({ descricao: textoCom(contrato.LIMITES.descricaoMax) }),
   },
   {
-    nome: 'latitude no limite inferior da faixa',
-    corpo: com({
-      location: { latitude: contrato.LIMITES.latitude.min, longitude: -34.8829, region: 'RPA_3' },
-    }),
+    nome: `localizacao com exatamente ${contrato.LIMITES.localizacaoMin} caracteres`,
+    corpo: com({ localizacao: textoCom(contrato.LIMITES.localizacaoMin) }),
   },
 ];
 
-module.exports = { valida, com, sem, descricaoCom, invalidas, limitesAceitos };
+module.exports = { valida, com, sem, tituloNovo, textoCom, invalidas, limitesAceitos };

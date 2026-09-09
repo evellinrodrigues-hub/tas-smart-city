@@ -2,7 +2,11 @@
 
 **SUT:** API REST do Projeto Integrador Smart City (Flask/PostgreSQL)
 **Nível:** sistema / serviço (API)
-**Total automatizado:** **114 casos** — 106 de API + 8 de verificação da própria TAS
+**Total automatizado:** **106 casos** — 98 de API + 8 de verificação da própria TAS.
+Números atualizados após a execução contra o back-end real (ver
+`docs/relatorio-qualidade.md`): a máquina de estados foi confirmada em 4
+estados, não 5 (16 pares, não 25), e os payloads de HU-01/HU-06/HU-13 foram
+ajustados ao formato real (campos em português, `username` em vez de `name`).
 
 ---
 
@@ -90,7 +94,7 @@ Gerados da matriz em `data/matriz-autorizacao.js`.
 | A6 | Cidadão não promove a si próprio a gestor | 403 **e** perfil inalterado |
 | — | Pendências de contrato registradas, não esquecidas | 3 perguntas abertas impressas a cada execução |
 
-### 3.4 HU-06 Registro de demanda — 18 casos
+### 3.4 HU-06 Registro de demanda — 19 casos
 
 | ID | Cenário | Esperado |
 | :-- | :--- | :--- |
@@ -100,8 +104,8 @@ Gerados da matriz em `data/matriz-autorizacao.js`.
 | C22 | Registro sem autenticação | 401 |
 | C23 | **Mass assignment**: cliente envia `status`, `protocol`, `id` | todos ignorados pelo servidor |
 | C24 | Autoria atribuída a quem registrou, não ao `author` enviado | autor = usuário autenticado |
-| C25 | Registro recusado (9 variações) | 400 apontando o campo: categoria fora da lista, descrição curta/longa, latitude/longitude fora de faixa, região inexistente, campos ausentes, corpo vazio |
-| C26 | Valor limite aceito (3 variações) | 201 na fronteira inclusiva (descrição 20 e 1000, latitude −90) |
+| C25 | Registro recusado (10 variações) | 400 (ou **422** contra o back-end real, achado — ver `docs/relatorio-qualidade.md`) apontando o campo: categoria fora da lista, descrição curta/longa, localização curta, prioridade fora da lista, título curto/ausente, campos ausentes, corpo vazio |
+| C26 | Valor limite aceito (3 variações) | 201 na fronteira inclusiva (descrição 10 e 500, localização 3 caracteres) |
 
 ### 3.5 HU-09 / HU-12 Consulta, isolamento e filtros — 9 casos
 
@@ -117,11 +121,11 @@ Gerados da matriz em `data/matriz-autorizacao.js`.
 | C34 | Identificador malformado | 400 ou 404, **nunca 500** |
 | C35 | Detalhe expõe os campos do contrato | 7 campos presentes |
 
-### 3.6 HU-13 Atualização de status e prioridade — 29 casos
+### 3.6 HU-13 Atualização de status e prioridade — 20 casos
 
 | ID | Cenário | Esperado |
 | :-- | :--- | :--- |
-| C36 | **Os 25 pares da máquina de estados** (5 origens × 5 destinos) | 5 aceitas com 200 e status aplicado; **20 recusadas com 409** `INVALID_STATUS_TRANSITION` **e estado inalterado** |
+| C36 | **Os 16 pares da máquina de estados** (4 origens × 4 destinos) | 4 aceitas com 200 e status aplicado; **12 recusadas com 409** `INVALID_STATUS_TRANSITION` **e estado inalterado**. Modelo adaptado de 5 para 4 estados ao confirmar o enum real (`PENDING/IN_PROGRESS/RESOLVED/REJECTED`) — ver `data/contrato.js`. |
 | C37 | Status fora da lista fechada | 400, não 409 |
 | C38 | Gestor atualiza prioridade | 200 e prioridade aplicada |
 | C39 | Prioridade fora da lista fechada | 400 |
@@ -155,7 +159,7 @@ Gerados da matriz em `data/matriz-autorizacao.js`.
 
 | ID | Cenário |
 | :-- | :--- |
-| TAS-01 | A tabela de transições tem 25 pares, 5 permitidos e 20 recusados |
+| TAS-01 | A tabela de transições tem 16 pares, 4 permitidos e 12 recusados |
 | TAS-02 | Repetir o status atual é recusado em todos os estados |
 | TAS-03 | Estados finais não têm transição de saída |
 | TAS-04 | Todo estado é alcançável a partir do inicial (senão o cenário não teria preparação possível) |

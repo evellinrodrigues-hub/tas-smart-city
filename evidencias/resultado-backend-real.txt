@@ -1,0 +1,1291 @@
+
+> tas-smart-city@1.0.0 test
+> node --test "tests/**/*.test.js"
+
+✔ CT C47 respostas de sucesso declaram content-type application/json (355.889924ms)
+✔ CT C48 respostas de erro tambem sao JSON, e nao HTML (6.261179ms)
+✖ CT C49 todo erro traz um code legivel por maquina (251.577155ms)
+✔ CT C50 rota inexistente responde 404 com corpo JSON padronizado (240.979074ms)
+✖ CT C51 metodo nao suportado responde 405, e nao 404 nem 500 (243.410281ms)
+✔ CT C52 corpo JSON malformado responde 400, e nao 500 (243.914141ms)
+✔ CT C53 nenhuma resposta da API vaza credencial em nenhuma rota verificada (516.705036ms)
+✖ CT C54 a API nao responde 5xx em nenhum dos caminhos verificados (747.214582ms)
+✔ HU-01 C13 cadastro com dados validos cria a conta (350.313772ms)
+✔ HU-01 C14 conta recem-criada consegue autenticar (478.358073ms)
+✖ HU-01 C15 e-mail ja cadastrado responde 409 (255.49275ms)
+✔ HU-01 C16 cadastro nao permite ao proprio usuario escolher o perfil (482.071101ms)
+✔ HU-01 C17 cadastro nao devolve a senha enviada (236.645519ms)
+✖ HU-01 C18 cadastro recusado: senha abaixo do minimo (6.615985ms)
+✖ HU-01 C18 cadastro recusado: e-mail sem formato valido (4.484354ms)
+✖ HU-01 C18 cadastro recusado: e-mail ausente (6.555444ms)
+✖ HU-01 C18 cadastro recusado: senha ausente (7.314368ms)
+✖ HU-01 C18 cadastro recusado: nome ausente (6.292089ms)
+✔ HU-02 C01 login com credenciais validas devolve access e refresh token (338.202342ms)
+✖ HU-02 C02 login com senha incorreta responde 401 (243.80603ms)
+✖ HU-02 C03 login de e-mail inexistente nao revela que a conta nao existe (241.519992ms)
+✖ HU-02 C04 login sem campos obrigatorios responde 400 apontando o campo (6.060725ms)
+✖ HU-02 C05 rota protegida sem token responde 401 (6.394868ms)
+✔ HU-02 C06 token inexistente responde 401 (4.906688ms)
+✔ HU-02 C07 header Authorization sem o esquema Bearer responde 401 (244.602012ms)
+✔ HU-02 C08 perfil autenticado devolve os dados do proprio usuario (243.36668ms)
+✔ HU-02 C09 nenhuma resposta de autenticacao vaza senha ou hash (242.956827ms)
+✔ HU-02 C10 refresh token valido renova o access token (255.091008ms)
+✖ HU-02 C11 access token nao serve como refresh token (247.458924ms)
+✔ HU-02 C12 logout invalida o token usado na sessao (250.588732ms)
+✔ HU-03 A1-cidadao POST /api/demandas (registrar demanda) permite para cidadao (354.383253ms)
+✖ HU-03 A1-gestor POST /api/demandas (registrar demanda) recusa com 403 para gestor (248.199445ms)
+✖ HU-03 A1-admin POST /api/demandas (registrar demanda) recusa com 403 para admin (249.675862ms)
+✔ HU-03 A2-cidadao GET /api/demandas (listar) permite para cidadao (249.347485ms)
+✔ HU-03 A2-gestor GET /api/demandas (listar) permite para gestor (249.36324ms)
+✔ HU-03 A2-admin GET /api/demandas (listar) permite para admin (244.016584ms)
+✖ HU-03 A3-cidadao PATCH /api/demandas/{id} (status e prioridade) recusa com 403 para cidadao (495.936643ms)
+✔ HU-03 A3-gestor PATCH /api/demandas/{id} (status e prioridade) permite para gestor (510.039037ms)
+✖ HU-03 A4-cidadao PATCH /auth/update com role (promover usuario) recusa com 403 para cidadao (251.036481ms)
+✖ HU-03 A4-gestor PATCH /auth/update com role (promover usuario) recusa com 403 para gestor (242.146162ms)
+✖ HU-03 A4-admin PATCH /auth/update com role (promover usuario) permite para admin (241.418303ms)
+✖ HU-03 A5 demanda de terceiro responde 404 ao cidadao, e nao 403 (475.337876ms)
+  [PENDENCIA DE CONTRATO A3-admin] ADMIN pode atualizar status/prioridade de demanda, ou apenas promover usuarios?
+  [PENDENCIA DE CONTRATO A5-admin-delete] ADMIN pode excluir demanda concluida, ou a restricao do MANAGER tambem vale para ele?
+  [PENDENCIA DE CONTRATO A6-gestor-setor] Ha isolamento por setor entre gestores (cenario TS16 dos casos de teste da squad)? O README fala em "qualquer demanda", o que contradiz o isolamento por setor.
+✖ HU-03 A6 cidadao nao promove a si proprio a gestor (231.445333ms)
+✔ HU-03 pendencias de contrato nao resolvidas estao registradas, nao esquecidas (0.635231ms)
+✔ HU-06 C19 registro valido cria a demanda no status inicial (807.996284ms)
+✖ HU-06 C20 o protocolo segue o formato especificado (255.318734ms)
+✖ HU-06 C21 protocolos de demandas diferentes nao se repetem (270.14733ms)
+✖ HU-06 C22 registro sem autenticacao responde 401 (6.645222ms)
+✔ HU-06 C23 campos controlados pelo servidor sao ignorados no corpo (247.843399ms)
+✖ HU-06 C24 a autoria e atribuida ao usuario autenticado (270.571052ms)
+✖ HU-06 C25 registro recusado: categoria fora da lista fechada (243.660455ms)
+✖ HU-06 C25 registro recusado: descricao abaixo do minimo (240.743206ms)
+✖ HU-06 C25 registro recusado: descricao acima do maximo (257.66424ms)
+✖ HU-06 C25 registro recusado: localizacao abaixo do minimo (249.101066ms)
+✖ HU-06 C25 registro recusado: prioridade fora da lista fechada (241.066284ms)
+✖ HU-06 C25 registro recusado: titulo abaixo do minimo (239.88893ms)
+✖ HU-06 C25 registro recusado: categoria ausente (237.012209ms)
+✖ HU-06 C25 registro recusado: descricao ausente (232.677552ms)
+✖ HU-06 C25 registro recusado: titulo ausente (227.061867ms)
+✖ HU-06 C25 registro recusado: corpo vazio (223.666424ms)
+✔ HU-06 C26 registro aceito no valor limite: descricao com exatamente 10 caracteres (219.408774ms)
+✔ HU-06 C26 registro aceito no valor limite: descricao com exatamente 500 caracteres (218.824575ms)
+✔ HU-06 C26 registro aceito no valor limite: localizacao com exatamente 3 caracteres (216.213892ms)
+✔ HU-09 C27 cidadao lista apenas as proprias demandas (1086.083809ms)
+✔ HU-09 C28 gestor enxerga demandas de qualquer cidadao (500.374515ms)
+✖ HU-09 C29 a listagem devolve o bloco de paginacao do contrato (277.862119ms)
+✔ HU-09 C30 pageSize limita a quantidade de itens devolvidos (266.569337ms)
+✔ HU-12 C31 filtro por status devolve somente demandas naquele status (245.140285ms)
+✔ HU-12 C32 filtro por categoria devolve somente aquela categoria (267.622482ms)
+✖ HU-09 C33 demanda inexistente responde 404 (245.205516ms)
+✔ HU-09 C34 identificador malformado nao produz erro interno (238.25298ms)
+✖ HU-09 C35 o detalhe da demanda expoe os campos do contrato (477.650714ms)
+✖ HU-13 C36 transicao PENDING -> PENDING e recusada com 409 (1059.037686ms)
+✔ HU-13 C36 transicao PENDING -> IN_PROGRESS e aceita (493.494512ms)
+✖ HU-13 C36 transicao PENDING -> RESOLVED e recusada com 409 (501.741418ms)
+✔ HU-13 C36 transicao PENDING -> REJECTED e aceita (501.689536ms)
+✖ HU-13 C36 transicao IN_PROGRESS -> PENDING e recusada com 409 (737.587155ms)
+✖ HU-13 C36 transicao IN_PROGRESS -> IN_PROGRESS e recusada com 409 (704.731618ms)
+✔ HU-13 C36 transicao IN_PROGRESS -> RESOLVED e aceita (667.382467ms)
+✔ HU-13 C36 transicao IN_PROGRESS -> REJECTED e aceita (647.789931ms)
+✖ HU-13 C36 transicao RESOLVED -> PENDING e recusada com 409 (663.407748ms)
+✖ HU-13 C36 transicao RESOLVED -> IN_PROGRESS e recusada com 409 (658.037927ms)
+✖ HU-13 C36 transicao RESOLVED -> RESOLVED e recusada com 409 (665.140998ms)
+✖ HU-13 C36 transicao RESOLVED -> REJECTED e recusada com 409 (655.510972ms)
+✖ HU-13 C36 transicao REJECTED -> PENDING e recusada com 409 (659.374046ms)
+✖ HU-13 C36 transicao REJECTED -> IN_PROGRESS e recusada com 409 (668.53649ms)
+✖ HU-13 C36 transicao REJECTED -> RESOLVED e recusada com 409 (662.452827ms)
+✖ HU-13 C36 transicao REJECTED -> REJECTED e recusada com 409 (669.992681ms)
+✖ HU-13 C37 status fora da lista fechada responde 400, nao 409 (448.064944ms)
+✔ HU-13 C38 gestor atualiza a prioridade da demanda (443.193185ms)
+✖ HU-13 C39 prioridade fora da lista fechada responde 400 (441.058851ms)
+✖ HU-13 C40 a resolucao registra a data de conclusao (656.337151ms)
+✔ HU-14 C41 cidadao exclui a propria demanda enquanto ela esta pendente (378.905136ms)
+✔ HU-14 C42 cidadao nao exclui a propria demanda depois de ela sair de pendente (497.961624ms)
+✔ HU-14 C43 cidadao nao exclui demanda de outro cidadao (727.479115ms)
+✖ HU-14 C44 gestor nao exclui demanda ja concluida (760.316152ms)
+✖ HU-14 C45 exclusao sem autenticacao responde 401 (263.480103ms)
+✔ HU-14 C46 exclusao de demanda inexistente responde 404 (245.122801ms)
+✔ TAS-01 a maquina de estados do contrato tem 16 pares e 4 transicoes validas (2.132503ms)
+✔ TAS-02 repetir o status atual e recusado em todos os estados (0.348682ms)
+✔ TAS-03 os estados finais nao tem transicao de saida (1.661506ms)
+✔ TAS-04 todo estado do contrato e alcancavel a partir do estado inicial (0.44981ms)
+✔ TAS-05 a massa de dados valida satisfaz todas as regras do contrato (0.287851ms)
+✔ TAS-06 valida() devolve uma instancia nova a cada chamada (0.171579ms)
+✔ TAS-07 cada caso invalido aponta um campo que existe na massa valida (0.345047ms)
+✔ TAS-08 a matriz de autorizacao cobre os tres perfis e nao tem celula vazia (0.295964ms)
+ℹ tests 106
+ℹ suites 0
+ℹ pass 50
+ℹ fail 56
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12842.504077
+
+✖ failing tests:
+
+test at tests/api/contrato-transversal.test.js:49:1
+✖ CT C49 todo erro traz um code legivel por maquina (251.577155ms)
+  AssertionError [ERR_ASSERTION]: 401 sem token: resposta de erro sem "code". Sem ele, o cliente e o teste so podem depender da mensagem em portugues, que muda a cada ajuste de redacao. Corpo: {
+    "data": null,
+    "message": "Token não fornecido",
+    "status_code": 401
+  }
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/contrato-transversal.test.js:60:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/api/contrato-transversal.test.js:78:1
+✖ CT C51 metodo nao suportado responde 405, e nao 404 nem 500 (243.410281ms)
+  AssertionError [ERR_ASSERTION]: a resposta 405 nao trouxe o header Allow, que e quem informa os metodos aceitos
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/contrato-transversal.test.js:89:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/api/contrato-transversal.test.js:129:1
+✖ CT C54 a API nao responde 5xx em nenhum dos caminhos verificados (747.214582ms)
+  AssertionError [ERR_ASSERTION]: a API respondeu 5xx em caminhos previsiveis
+  + actual - expected
+  
+  + [
+  +   'login invalido -> 500'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/contrato-transversal.test.js:144:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'login invalido -> 500' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu01-cadastro.test.js:40:1
+✖ HU-01 C15 e-mail ja cadastrado responde 409 (255.49275ms)
+  AssertionError [ERR_ASSERTION]: esperado 409 no e-mail duplicado; recebido 400
+  
+  400 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu01-cadastro.test.js:47:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu01-cadastro.test.js:85:3
+✖ HU-01 C18 cadastro recusado: senha abaixo do minimo (6.615985ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'VALIDATION_ERROR'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu01-cadastro.test.js:89:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'VALIDATION_ERROR',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu01-cadastro.test.js:85:3
+✖ HU-01 C18 cadastro recusado: e-mail sem formato valido (4.484354ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'VALIDATION_ERROR'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu01-cadastro.test.js:89:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'VALIDATION_ERROR',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu01-cadastro.test.js:85:3
+✖ HU-01 C18 cadastro recusado: e-mail ausente (6.555444ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'VALIDATION_ERROR'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu01-cadastro.test.js:89:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'VALIDATION_ERROR',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu01-cadastro.test.js:85:3
+✖ HU-01 C18 cadastro recusado: senha ausente (7.314368ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'VALIDATION_ERROR'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu01-cadastro.test.js:89:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'VALIDATION_ERROR',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu01-cadastro.test.js:85:3
+✖ HU-01 C18 cadastro recusado: nome ausente (6.292089ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'VALIDATION_ERROR'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu01-cadastro.test.js:89:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'VALIDATION_ERROR',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu02-autenticacao.test.js:33:1
+✖ HU-02 C02 login com senha incorreta responde 401 (243.80603ms)
+  AssertionError [ERR_ASSERTION]: esperado 401 com senha errada; recebido 500
+  
+  500 !== 401
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu02-autenticacao.test.js:36:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 401,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu02-autenticacao.test.js:40:1
+✖ HU-02 C03 login de e-mail inexistente nao revela que a conta nao existe (241.519992ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 401
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu02-autenticacao.test.js:44:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 401,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu02-autenticacao.test.js:59:1
+✖ HU-02 C04 login sem campos obrigatorios responde 400 apontando o campo (6.060725ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'VALIDATION_ERROR'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu02-autenticacao.test.js:63:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'VALIDATION_ERROR',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu02-autenticacao.test.js:70:1
+✖ HU-02 C05 rota protegida sem token responde 401 (6.394868ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'UNAUTHENTICATED'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu02-autenticacao.test.js:74:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'UNAUTHENTICATED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu02-autenticacao.test.js:131:1
+✖ HU-02 C11 access token nao serve como refresh token (247.458924ms)
+  AssertionError [ERR_ASSERTION]: access token foi aceito como refresh token (status 200): a distincao entre os dois tokens nao esta sendo verificada
+  
+  200 !== 401
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu02-autenticacao.test.js:137:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 401,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu03-autorizacao.test.js:58:3
+✖ HU-03 A1-gestor POST /api/demandas (registrar demanda) recusa com 403 para gestor (248.199445ms)
+  AssertionError [ERR_ASSERTION]: FALHA DE AUTORIZACAO: gestor NAO deveria poder executar "POST /api/demandas (registrar demanda)" (README secao 8: "CITIZEN cria demandas"), mas a API respondeu status=201 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:27.555148",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 53,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  201 !== 403
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu03-autorizacao.test.js:72:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 201,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu03-autorizacao.test.js:58:3
+✖ HU-03 A1-admin POST /api/demandas (registrar demanda) recusa com 403 para admin (249.675862ms)
+  AssertionError [ERR_ASSERTION]: FALHA DE AUTORIZACAO: admin NAO deveria poder executar "POST /api/demandas (registrar demanda)" (README secao 8: "CITIZEN cria demandas"), mas a API respondeu status=201 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:27.806733",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 57,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  201 !== 403
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu03-autorizacao.test.js:72:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 201,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu03-autorizacao.test.js:58:3
+✖ HU-03 A3-cidadao PATCH /api/demandas/{id} (status e prioridade) recusa com 403 para cidadao (495.936643ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'FORBIDDEN'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu03-autorizacao.test.js:78:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'FORBIDDEN',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu03-autorizacao.test.js:58:3
+✖ HU-03 A4-cidadao PATCH /auth/update com role (promover usuario) recusa com 403 para cidadao (251.036481ms)
+  AssertionError [ERR_ASSERTION]: FALHA DE AUTORIZACAO: cidadao NAO deveria poder executar "PATCH /auth/update com role (promover usuario)" (README secao 8: "ADMIN pode promover usuarios para Gestor"), mas a API respondeu status=500 tipo=application/json corpo={
+    "data": null,
+    "message": "Erro ao atualizar perfil",
+    "status_code": 500
+  }
+  
+  
+  500 !== 403
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu03-autorizacao.test.js:72:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu03-autorizacao.test.js:58:3
+✖ HU-03 A4-gestor PATCH /auth/update com role (promover usuario) recusa com 403 para gestor (242.146162ms)
+  AssertionError [ERR_ASSERTION]: FALHA DE AUTORIZACAO: gestor NAO deveria poder executar "PATCH /auth/update com role (promover usuario)" (README secao 8: "ADMIN pode promover usuarios para Gestor"), mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "createdAt": "2026-09-09T11:35:37.345482",
+      "email": "gestor@exemplo.com",
+      "id": 3,
+      "name": "gestor",
+      "role": "gestor"
+    },
+    "message": "Perfil atualizado com sucesso",
+    "status_code": 200
+  }
+  
+  
+  200 !== 403
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu03-autorizacao.test.js:72:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu03-autorizacao.test.js:58:3
+✖ HU-03 A4-admin PATCH /auth/update com role (promover usuario) permite para admin (241.418303ms)
+  AssertionError [ERR_ASSERTION]: admin deveria poder executar "PATCH /auth/update com role (promover usuario)" (README secao 8: "ADMIN pode promover usuarios para Gestor"), mas a API respondeu status=500 tipo=application/json corpo={
+    "data": null,
+    "message": "Erro ao atualizar perfil",
+    "status_code": 500
+  }
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu03-autorizacao.test.js:64:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/api/hu03-autorizacao.test.js:82:1
+✖ HU-03 A5 demanda de terceiro responde 404 ao cidadao, e nao 403 (475.337876ms)
+  AssertionError [ERR_ASSERTION]: esperado 404 (recurso invisivel) e nao 403: responder 403 confirma a existencia da demanda alheia e permite enumeracao
+  
+  403 !== 404
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu03-autorizacao.test.js:97:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 403,
+    expected: 404,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu03-autorizacao.test.js:106:1
+✖ HU-03 A6 cidadao nao promove a si proprio a gestor (231.445333ms)
+  AssertionError [ERR_ASSERTION]: ESCALONAMENTO DE PRIVILEGIO: cidadao alterou o proprio perfil (status=200 tipo=application/json corpo={
+    "data": {
+      "createdAt": "2026-09-09T11:35:36.819820",
+      "email": "ana@exemplo.com",
+      "id": 1,
+      "name": "ana",
+      "role": "gestor"
+    },
+    "message": "Perfil atualizado com sucesso",
+    "status_code": 200
+  }
+  )
+  
+  200 !== 403
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu03-autorizacao.test.js:113:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:42:1
+✖ HU-06 C20 o protocolo segue o formato especificado (255.318734ms)
+  AssertionError [ERR_ASSERTION]: protocolo "undefined" nao casa com /^DEM-\d{4}-\d{6}$/
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:50:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:56:1
+✖ HU-06 C21 protocolos de demandas diferentes nao se repetem (270.14733ms)
+  AssertionError [ERR_ASSERTION]: duas demandas receberam o mesmo protocolo (undefined): o identificador do cidadao nao e unico
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:64:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:67:1
+✖ HU-06 C22 registro sem autenticacao responde 401 (6.645222ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'UNAUTHENTICATED'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:71:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'UNAUTHENTICATED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:99:1
+✖ HU-06 C24 a autoria e atribuida ao usuario autenticado (270.571052ms)
+  AssertionError [ERR_ASSERTION]: a demanda criada nao registrou autoria
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:106:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: categoria fora da lista fechada (243.660455ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "categoria fora da lista fechada"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: descricao abaixo do minimo (240.743206ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "descricao abaixo do minimo"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: descricao acima do maximo (257.66424ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "descricao acima do maximo"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: localizacao abaixo do minimo (249.101066ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "localizacao abaixo do minimo"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: prioridade fora da lista fechada (241.066284ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "prioridade fora da lista fechada"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: titulo abaixo do minimo (239.88893ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "titulo abaixo do minimo"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: categoria ausente (237.012209ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "categoria ausente"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: descricao ausente (232.677552ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "descricao ausente"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: titulo ausente (227.061867ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "titulo ausente"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu06-registro-demanda.test.js:117:3
+✖ HU-06 C25 registro recusado: corpo vazio (223.666424ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para "corpo vazio"; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu06-registro-demanda.test.js:121:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu09-consulta-demandas.test.js:70:1
+✖ HU-09 C29 a listagem devolve o bloco de paginacao do contrato (277.862119ms)
+  AssertionError [ERR_ASSERTION]: paginacao sem o campo "page"
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu09-consulta-demandas.test.js:79:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/api/hu09-consulta-demandas.test.js:124:1
+✖ HU-09 C33 demanda inexistente responde 404 (245.205516ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'NOT_FOUND'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu09-consulta-demandas.test.js:129:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'NOT_FOUND',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu09-consulta-demandas.test.js:144:1
+✖ HU-09 C35 o detalhe da demanda expoe os campos do contrato (477.650714ms)
+  AssertionError [ERR_ASSERTION]: o detalhe da demanda nao trouxe os campos: protocol
+  + actual - expected
+  
+  + [
+  +   'protocol'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu09-consulta-demandas.test.js:160:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'protocol' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao PENDING -> PENDING e recusada com 409 (1059.037686ms)
+  AssertionError [ERR_ASSERTION]: a transicao PENDING -> PENDING NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:27.771600",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 56,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao PENDING -> RESOLVED e recusada com 409 (501.741418ms)
+  AssertionError [ERR_ASSERTION]: a transicao PENDING -> RESOLVED NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:28.762036",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 67,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao IN_PROGRESS -> PENDING e recusada com 409 (737.587155ms)
+  AssertionError [ERR_ASSERTION]: a transicao IN_PROGRESS -> PENDING NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:29.780454",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 80,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao IN_PROGRESS -> IN_PROGRESS e recusada com 409 (704.731618ms)
+  AssertionError [ERR_ASSERTION]: a transicao IN_PROGRESS -> IN_PROGRESS NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:30.502898",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 82,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao RESOLVED -> PENDING e recusada com 409 (663.407748ms)
+  AssertionError [ERR_ASSERTION]: a transicao RESOLVED -> PENDING NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:32.497713",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 89,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao RESOLVED -> IN_PROGRESS e recusada com 409 (658.037927ms)
+  AssertionError [ERR_ASSERTION]: a transicao RESOLVED -> IN_PROGRESS NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:33.161274",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 90,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao RESOLVED -> RESOLVED e recusada com 409 (665.140998ms)
+  AssertionError [ERR_ASSERTION]: a transicao RESOLVED -> RESOLVED NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:33.822643",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 91,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao RESOLVED -> REJECTED e recusada com 409 (655.510972ms)
+  AssertionError [ERR_ASSERTION]: a transicao RESOLVED -> REJECTED NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:34.482761",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 92,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao REJECTED -> PENDING e recusada com 409 (659.374046ms)
+  AssertionError [ERR_ASSERTION]: a transicao REJECTED -> PENDING NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:35.139006",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 93,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao REJECTED -> IN_PROGRESS e recusada com 409 (668.53649ms)
+  AssertionError [ERR_ASSERTION]: a transicao REJECTED -> IN_PROGRESS NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:35.803912",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 94,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao REJECTED -> RESOLVED e recusada com 409 (662.452827ms)
+  AssertionError [ERR_ASSERTION]: a transicao REJECTED -> RESOLVED NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:36.473325",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 95,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:37:3
+✖ HU-13 C36 transicao REJECTED -> REJECTED e recusada com 409 (669.992681ms)
+  AssertionError [ERR_ASSERTION]: a transicao REJECTED -> REJECTED NAO e permitida pelo contrato, mas a API respondeu status=200 tipo=application/json corpo={
+    "data": {
+      "demanda": {
+        "category": "ROAD_MAINTENANCE",
+        "createdAt": "2026-09-09T13:18:37.133878",
+        "description": "Buraco de grande porte na pista da direita, proximo ao cruzamento.",
+        "id": 96,
+        "location": "Rua das Flores, 123 - Bairro Boa Viagem",
+        "priorit
+  
+  200 !== 409
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:59:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:79:1
+✖ HU-13 C37 status fora da lista fechada responde 400, nao 409 (448.064944ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para status inexistente; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:87:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:106:1
+✖ HU-13 C39 prioridade fora da lista fechada responde 400 (441.058851ms)
+  AssertionError [ERR_ASSERTION]: esperado 400 para prioridade inexistente; recebido 422
+  
+  422 !== 400
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:112:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 422,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu13-atualizacao-status.test.js:116:1
+✖ HU-13 C40 a resolucao registra a data de conclusao (656.337151ms)
+  AssertionError [ERR_ASSERTION]: demanda resolvida sem data de resolucao: o calculo de tempo de atendimento fica impossivel
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu13-atualizacao-status.test.js:124:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/api/hu14-exclusao-demanda.test.js:78:1
+✖ HU-14 C44 gestor nao exclui demanda ja concluida (760.316152ms)
+  AssertionError [ERR_ASSERTION]: README secao 8: o gestor "nao pode excluir demandas ja concluidas". A API respondeu status=200 tipo=application/json corpo={
+    "data": null,
+    "message": "Demanda removida com sucesso.",
+    "status_code": 200
+  }
+  
+  
+  200 !== 403
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu14-exclusao-demanda.test.js:83:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api/hu14-exclusao-demanda.test.js:94:1
+✖ HU-14 C45 exclusao sem autenticacao responde 401 (263.480103ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + null
+  - 'UNAUTHENTICATED'
+  
+      at TestContext.<anonymous> (/Users/lmma/Desktop/atvapi/tas-smart-city/tests/api/hu14-exclusao-demanda.test.js:100:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1208:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'UNAUTHENTICATED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

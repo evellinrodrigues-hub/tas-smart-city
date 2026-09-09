@@ -34,7 +34,7 @@ test('HU-06 C19 registro valido cria a demanda no status inicial', async () => {
     contrato.STATUS_INICIAL,
     `o contrato diz que toda demanda nasce em ${contrato.STATUS_INICIAL}`,
   );
-  assert.equal(demanda.category, demandas.valida().category, 'a categoria enviada nao foi persistida');
+  assert.equal(demanda.category, demandas.valida().categoria, 'a categoria enviada nao foi persistida');
   assert.equal(demanda.resolvedAt ?? null, null, 'demanda recem-criada ja nasceu com data de resolucao');
   assert.ok(demanda.id, 'a demanda criada nao devolveu identificador');
 });

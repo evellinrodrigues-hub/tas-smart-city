@@ -42,12 +42,12 @@ const SENHA_PADRAO = process.env.SENHA_PADRAO || 'senha123';
  * defeitos sao injetados por variavel de ambiente e ficam versionados. Cada
  * um mira uma assercao especifica da suite:
  *
- *   DEFEITO=transicao-extra     abre IN_PROGRESS -> REJECTED (fora do contrato)
+ *   DEFEITO=transicao-extra     abre RESOLVED -> IN_PROGRESS (fora do contrato)
  *   DEFEITO=role-do-cliente     cadastro obedece ao `role` enviado pelo cliente
  *   DEFEITO=403-em-vez-de-404   recurso de terceiro confirma que existe
  *   DEFEITO=vaza-senha          respostas de usuario incluem a senha
  *   DEFEITO=sem-code            erros perdem o campo `code`
- *   DEFEITO=status-inicial      demanda nasce em UNDER_ANALYSIS
+ *   DEFEITO=status-inicial      demanda nasce em IN_PROGRESS
  *
  * Uso: npm run sensibilidade
  */
@@ -114,7 +114,7 @@ const naFaixa = (v, { min, max }) => typeof v === 'number' && Number.isFinite(v)
 
 function validarCadastro(corpo) {
   const d = [];
-  if (!ehTexto(corpo.name)) d.push({ field: 'name', issue: 'Obrigatorio.' });
+  if (!ehTexto(corpo.username)) d.push({ field: 'username', issue: 'Obrigatorio.' });
   if (!ehTexto(corpo.email) || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(corpo.email)) {
     d.push({ field: 'email', issue: 'E-mail invalido.' });
   }
@@ -126,25 +126,31 @@ function validarCadastro(corpo) {
 
 function validarDemanda(corpo) {
   const d = [];
-  if (!contrato.CATEGORIAS.includes(corpo.category)) {
-    d.push({ field: 'category', issue: 'Valor fora da lista fechada.' });
+  if (!ehTexto(corpo.titulo) || corpo.titulo.length < contrato.LIMITES.tituloMin || corpo.titulo.length > contrato.LIMITES.tituloMax) {
+    d.push({
+      field: 'titulo',
+      issue: `Entre ${contrato.LIMITES.tituloMin} e ${contrato.LIMITES.tituloMax} caracteres.`,
+    });
   }
-  const desc = corpo.description;
+  if (!contrato.CATEGORIAS.includes(corpo.categoria)) {
+    d.push({ field: 'categoria', issue: 'Valor fora da lista fechada.' });
+  }
+  const desc = corpo.descricao;
   if (!ehTexto(desc) || desc.length < contrato.LIMITES.descricaoMin || desc.length > contrato.LIMITES.descricaoMax) {
     d.push({
-      field: 'description',
+      field: 'descricao',
       issue: `Entre ${contrato.LIMITES.descricaoMin} e ${contrato.LIMITES.descricaoMax} caracteres.`,
     });
   }
-  const loc = corpo.location || {};
-  if (!naFaixa(loc.latitude, contrato.LIMITES.latitude)) {
-    d.push({ field: 'location.latitude', issue: 'Fora da faixa permitida.' });
+  const loc = corpo.localizacao;
+  if (!ehTexto(loc) || loc.length < contrato.LIMITES.localizacaoMin || loc.length > contrato.LIMITES.localizacaoMax) {
+    d.push({
+      field: 'localizacao',
+      issue: `Entre ${contrato.LIMITES.localizacaoMin} e ${contrato.LIMITES.localizacaoMax} caracteres.`,
+    });
   }
-  if (!naFaixa(loc.longitude, contrato.LIMITES.longitude)) {
-    d.push({ field: 'location.longitude', issue: 'Fora da faixa permitida.' });
-  }
-  if (!contrato.REGIOES.includes(loc.region)) {
-    d.push({ field: 'location.region', issue: 'Regiao invalida.' });
+  if (!contrato.PRIORIDADES.includes(corpo.prioridade)) {
+    d.push({ field: 'prioridade', issue: 'Valor fora da lista fechada.' });
   }
   return d;
 }
@@ -241,7 +247,7 @@ function tratar(req, res, bruto) {
     // promocao so acontece por ADMIN em PATCH /auth/update.
     const novo = {
       id: randomUUID(),
-      name: corpo.name,
+      name: corpo.username,
       email: corpo.email,
       role: DEFEITO === 'role-do-cliente' ? (corpo.role ?? contrato.PERFIS.CIDADAO) : contrato.PERFIS.CIDADAO,
       password: corpo.password,
@@ -321,15 +327,18 @@ function tratar(req, res, bruto) {
       return falhar(res, 400, contrato.ERROS.VALIDACAO, 'Verifique os campos.', detalhes);
     }
     const instante = agora();
-    // Campos controlados pelo servidor: o que veio do cliente e descartado.
+    // Campos controlados pelo servidor: id, protocol, status, author, createdAt,
+    // updatedAt, resolvedAt. `prioridade` NAO e controlada pelo servidor: o
+    // contrato real exige e persiste o valor enviado pelo cliente na criacao.
     const demanda = {
       id: randomUUID(),
       protocol: `DEM-${new Date().getFullYear()}-${String(++sequencia).padStart(6, '0')}`,
-      category: corpo.category,
-      description: corpo.description,
-      priority: contrato.PRIORIDADES[1],
-      status: DEFEITO === 'status-inicial' ? contrato.STATUS.EM_ANALISE : contrato.STATUS_INICIAL,
-      location: corpo.location,
+      title: corpo.titulo,
+      category: corpo.categoria,
+      description: corpo.descricao,
+      priority: corpo.prioridade,
+      status: DEFEITO === 'status-inicial' ? contrato.STATUS.EM_ANDAMENTO : contrato.STATUS_INICIAL,
+      location: corpo.localizacao,
       author: { id: usuario.id, name: usuario.name },
       createdAt: instante,
       updatedAt: instante,
@@ -347,16 +356,14 @@ function tratar(req, res, bruto) {
 
     const filtradas = visiveis.filter(d => {
       const status = url.searchParams.get('status');
-      const categoria = url.searchParams.get('category');
-      const regiao = url.searchParams.get('region');
+      const categoria = url.searchParams.get('categoria') || url.searchParams.get('category');
       if (status && d.status !== status) return false;
       if (categoria && d.category !== categoria) return false;
-      if (regiao && d.location?.region !== regiao) return false;
       return true;
     });
 
     const pagina = Math.max(1, Number(url.searchParams.get('page') || 1));
-    const porPagina = Math.max(1, Number(url.searchParams.get('pageSize') || 20));
+    const porPagina = Math.max(1, Number(url.searchParams.get('per_page') || url.searchParams.get('pageSize') || 20));
     const inicio = (pagina - 1) * porPagina;
 
     return enviar(res, 200, {
@@ -393,13 +400,13 @@ function tratar(req, res, bruto) {
       if (usuario.role === contrato.PERFIS.CIDADAO) {
         return falhar(res, 403, contrato.ERROS.PROIBIDO, 'Cidadao nao altera status ou prioridade.');
       }
-      if (corpo.priority !== undefined) {
-        if (!contrato.PRIORIDADES.includes(corpo.priority)) {
+      if (corpo.prioridade !== undefined) {
+        if (!contrato.PRIORIDADES.includes(corpo.prioridade)) {
           return falhar(res, 400, contrato.ERROS.VALIDACAO, 'Prioridade invalida.', [
-            { field: 'priority', issue: 'Valor fora da lista fechada.' },
+            { field: 'prioridade', issue: 'Valor fora da lista fechada.' },
           ]);
         }
-        demanda.priority = corpo.priority;
+        demanda.priority = corpo.prioridade;
       }
       if (corpo.status !== undefined) {
         if (!contrato.ESTADOS.includes(corpo.status)) {
@@ -410,8 +417,8 @@ function tratar(req, res, bruto) {
         const permitidaAqui =
           contrato.transicaoPermitida(demanda.status, corpo.status) ||
           (DEFEITO === 'transicao-extra' &&
-            demanda.status === contrato.STATUS.EM_ANDAMENTO &&
-            corpo.status === contrato.STATUS.REJEITADA);
+            demanda.status === contrato.STATUS.RESOLVIDA &&
+            corpo.status === contrato.STATUS.EM_ANDAMENTO);
 
         if (!permitidaAqui) {
           return falhar(

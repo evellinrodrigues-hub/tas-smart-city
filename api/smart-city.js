@@ -112,7 +112,9 @@ async function percorrerListagem(token, filtros = {}, maxPaginas = 50) {
   const itens = [];
 
   for (let pagina = 1; pagina <= maxPaginas; pagina++) {
-    const resposta = await listarDemandas(token, { ...filtros, page: pagina, pageSize: 100 });
+    // `per_page`: nome real do parametro (schemas/demandas_schema.py,
+    // DemandaQuerySchema). O duplo de referencia aceita os dois nomes.
+    const resposta = await listarDemandas(token, { ...filtros, page: pagina, pageSize: 100, per_page: 100 });
     if (resposta.status !== 200) {
       throw new Error(
         `Listagem falhou na pagina ${pagina}: ${resposta.status} ${resposta.raw.slice(0, 200)}`,
@@ -123,7 +125,7 @@ async function percorrerListagem(token, filtros = {}, maxPaginas = 50) {
     itens.push(...lote);
 
     const pag = insp.paginacao(resposta.body);
-    const totalPaginas = Number(pag?.totalPages ?? 1);
+    const totalPaginas = Number(pag?.totalPages ?? pag?.paginas ?? 1);
     if (lote.length === 0 || pagina >= totalPaginas) return itens;
   }
 
@@ -145,6 +147,7 @@ const localizarNaListagem = async (token, id, filtros) =>
  * Preparacao de massa, nao verificacao: por isso lanca se o caminho quebrar.
  */
 async function demandaNoEstado(estadoAlvo, dadosDemanda) {
+  const insp = require('../lib/inspecao');
   const tokenCidadao = await tokenDe(USUARIOS.cidadao);
   const criacao = await criarDemanda(tokenCidadao, dadosDemanda);
 
@@ -155,7 +158,7 @@ async function demandaNoEstado(estadoAlvo, dadosDemanda) {
     );
   }
 
-  const demanda = criacao.body?.data ?? criacao.body;
+  const demanda = insp.carga(criacao.body);
   const id = demanda?.id ?? demanda?.protocol;
 
   if (estadoAlvo === contrato.STATUS_INICIAL) return { id, demanda, tokenCidadao };
