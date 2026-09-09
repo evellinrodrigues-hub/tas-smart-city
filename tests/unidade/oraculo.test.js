@@ -19,16 +19,16 @@ const matriz = require('../../data/matriz-autorizacao');
 const demandas = require('../../data/demandas');
 const api = require('../../api/smart-city');
 
-test('TAS-01 a maquina de estados do contrato tem 25 pares e 5 transicoes validas', () => {
+test('TAS-01 a maquina de estados do contrato tem 16 pares e 4 transicoes validas', () => {
   const pares = contrato.paresDeTransicao();
 
-  assert.equal(pares.length, 25, 'a tabela deveria cobrir 5 estados de origem x 5 de destino');
+  assert.equal(pares.length, 16, 'a tabela deveria cobrir 4 estados de origem x 4 de destino');
   assert.equal(
     pares.filter(p => p.permitida).length,
-    5,
-    'o contrato declara exatamente 5 transicoes permitidas',
+    4,
+    'o contrato declara exatamente 4 transicoes permitidas',
   );
-  assert.equal(pares.filter(p => !p.permitida).length, 20, 'logo, 20 pares devem ser recusados');
+  assert.equal(pares.filter(p => !p.permitida).length, 12, 'logo, 12 pares devem ser recusados');
 });
 
 test('TAS-02 repetir o status atual e recusado em todos os estados', () => {
@@ -63,26 +63,31 @@ test('TAS-04 todo estado do contrato e alcancavel a partir do estado inicial', (
 test('TAS-05 a massa de dados valida satisfaz todas as regras do contrato', () => {
   const d = demandas.valida();
 
-  assert.ok(contrato.CATEGORIAS.includes(d.category), 'a categoria da massa valida saiu da lista fechada');
+  assert.ok(contrato.CATEGORIAS.includes(d.categoria), 'a categoria da massa valida saiu da lista fechada');
   assert.ok(
-    d.description.length >= contrato.LIMITES.descricaoMin &&
-      d.description.length <= contrato.LIMITES.descricaoMax,
+    d.descricao.length >= contrato.LIMITES.descricaoMin &&
+      d.descricao.length <= contrato.LIMITES.descricaoMax,
     'a descricao da massa valida esta fora dos limites do contrato',
   );
-  assert.ok(contrato.REGIOES.includes(d.location.region), 'a regiao da massa valida nao existe no contrato');
+  assert.ok(
+    d.localizacao.length >= contrato.LIMITES.localizacaoMin &&
+      d.localizacao.length <= contrato.LIMITES.localizacaoMax,
+    'a localizacao da massa valida esta fora dos limites do contrato',
+  );
+  assert.ok(contrato.PRIORIDADES.includes(d.prioridade), 'a prioridade da massa valida saiu da lista fechada');
 });
 
 test('TAS-06 valida() devolve uma instancia nova a cada chamada', () => {
   // Objeto compartilhado entre testes pode ser mutado por um deles e
   // contaminar os demais, produzindo falhas que dependem da ordem de execucao.
   const primeira = demandas.valida();
-  primeira.category = 'CONTAMINADA';
+  primeira.categoria = 'CONTAMINADA';
 
-  assert.notEqual(demandas.valida().category, 'CONTAMINADA', 'a massa de dados esta sendo compartilhada');
+  assert.notEqual(demandas.valida().categoria, 'CONTAMINADA', 'a massa de dados esta sendo compartilhada');
 });
 
 test('TAS-07 cada caso invalido aponta um campo que existe na massa valida', () => {
-  const validos = new Set(['category', 'description', 'location.latitude', 'location.longitude', 'location.region']);
+  const validos = new Set(['titulo', 'descricao', 'categoria', 'localizacao', 'prioridade']);
 
   for (const caso of demandas.invalidas()) {
     assert.ok(

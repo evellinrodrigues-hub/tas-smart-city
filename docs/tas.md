@@ -70,10 +70,10 @@ Três, e cada um verificável em dezembro com evidência ao lado.
 | ID | Risco | Mitigação adotada |
 | :--- | :--- | :--- |
 | **R-01** | A exaustividade dos 25 pares da máquina de estados está no nível de serviço, não no de componente — onde custaria milissegundos. Custo de execução mais alto e dependência do ambiente no ar. | Assumido conscientemente: a regra vive no Flask e não há alternativa hoje. Verificar 2 ou 3 pares e chamar de cobertura deixaria **20 recusas** sem verificação. Item 1 do backlog reverte isso. |
-| **R-02** | **Payloads, códigos de erro, enum de status e limites de campo não estão documentados.** A documentação Postman é renderizada por JavaScript e retorna apenas o título. | Todo valor não confirmado está marcado `[B]` em `data/contrato.js`, em um único lugar. Confirmar com a equipe de back-end é editar um arquivo. |
-| **R-03** | Vocabulário de status divergente entre fontes: o Material de Estudo usa `RECEIVED/UNDER_ANALYSIS/...`; os casos de teste da squad usam "Aberto"/"Em andamento"/"Resolvido". | Adotado o enum do contrato didático (única fonte com tabela de transições fechada). Divergência registrada; a troca é uma edição em `data/contrato.js`. |
+| **R-02** | **Payloads, códigos de erro, enum de status e limites de campo não estão documentados.** A documentação Postman é renderizada por JavaScript e retorna apenas o título. | **Confirmado por leitura do código-fonte real** (`schemas/*.py` do back-end), não mais hipótese do SUT didático. Marcado `[C]` em `data/contrato.js`, com a distinção explícita de que fatos de formato (`[C]`) nunca são usados para decidir regra de negócio (`[A]`/`[B]`) — ver cabeçalho do arquivo. Achado adicional: **não existe campo `error.code`** no back-end real (seção 3.2, `docs/relatorio-qualidade.md`). |
+| **R-03** | Vocabulário de status divergente entre fontes: o Material de Estudo usa `RECEIVED/UNDER_ANALYSIS/...`; os casos de teste da squad usam "Aberto"/"Em andamento"/"Resolvido". | **Resolvido para o back-end real**: o enum confirmado tem 4 estados (`PENDING/IN_PROGRESS/RESOLVED/REJECTED`), não 5. A tabela de transições entre eles continua sendo hipótese adaptada (nenhuma fonte documenta as regras de transição deste enum específico) — e o achado mais relevante da entrega é que **o back-end real não aplica nenhuma validação de transição** (`docs/relatorio-qualidade.md`, achado D-08). |
 | **R-04** | Três células da matriz de autorização não são decididas pelo README (ADMIN sobre demandas, exclusão por ADMIN, isolamento por setor entre gestores). | **Não inventadas.** Registradas em `data/matriz-autorizacao.js` e impressas a cada execução como pendência de contrato. |
-| **R-05** | Suíte verde contra o duplo de referência não é evidência sobre o produto. | Declarado no README, no cabeçalho do próprio `server.js` e na seção 7 deste documento. Executar contra o back-end real é item bloqueante da entrega. |
+| **R-05** | Suíte verde contra o duplo de referência não é evidência sobre o produto. | **Resolvido nesta entrega.** A suíte foi ajustada ao formato real (payload, enum de status, perfis) e executada contra o back-end Flask. Achados em `docs/relatorio-qualidade.md`, seção 3. |
 
 ---
 
@@ -96,7 +96,7 @@ Ordenado por **risco** e, dentro de cada faixa, por **custo crescente**.
 | # | Item | HU | Nível | Risco | Custo | Status |
 | :-- | :--- | :-- | :--- | :--- | :--- | :--- |
 | 1 | Extrair a regra de transição do handler Flask para módulo puro e cobrir os 25 pares em suíte Python de unidade | 13 | Unid | Alto | Baixo | **a fazer** — pedido a levar para Desenvolvimento |
-| 2 | Executar a suíte contra o back-end Flask real e classificar divergências | todas | API | Alto | Baixo | **a fazer — bloqueante** |
+| 2 | Executar a suíte contra o back-end Flask real e classificar divergências | todas | API | Alto | Baixo | **feito** — ver `docs/relatorio-qualidade.md` |
 | 3 | Autorização por perfil (matriz) | 03 | API | Alto | Baixo | feito |
 | 4 | Registro de demanda: caminho feliz, validações e limites | 06 | API | Alto | Baixo | feito |
 | 5 | Autenticação, sessão, logout e refresh | 02 | API | Alto | Baixo | feito |

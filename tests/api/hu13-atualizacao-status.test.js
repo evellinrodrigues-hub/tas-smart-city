@@ -97,7 +97,7 @@ test('HU-13 C38 gestor atualiza a prioridade da demanda', async () => {
   const tokenGestor = await api.tokenDe(USUARIOS.gestor);
   const novaPrioridade = contrato.PRIORIDADES.at(-1);
 
-  const { status, body } = await api.atualizarDemanda(tokenGestor, id, { priority: novaPrioridade });
+  const { status, body } = await api.atualizarDemanda(tokenGestor, id, { prioridade: novaPrioridade });
 
   assert.equal(status, 200, `esperado 200 ao atualizar prioridade; recebido ${status}`);
   assert.equal(insp.carga(body).priority, novaPrioridade, 'a prioridade nao foi aplicada');
@@ -107,7 +107,7 @@ test('HU-13 C39 prioridade fora da lista fechada responde 400', async () => {
   const { id } = await api.demandaNoEstado(contrato.STATUS_INICIAL, demandas.valida());
   const tokenGestor = await api.tokenDe(USUARIOS.gestor);
 
-  const { status, body } = await api.atualizarDemanda(tokenGestor, id, { priority: 'URGENTISSIMA' });
+  const { status, body } = await api.atualizarDemanda(tokenGestor, id, { prioridade: 'URGENTISSIMA' });
 
   assert.equal(status, 400, `esperado 400 para prioridade inexistente; recebido ${status}`);
   assert.equal(insp.codigoDeErro(body), contrato.ERROS.VALIDACAO);

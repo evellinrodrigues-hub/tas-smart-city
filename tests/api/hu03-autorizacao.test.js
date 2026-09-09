@@ -37,7 +37,7 @@ async function executar(operacaoId, token, perfil) {
 
     case 'A3': {
       const { id } = await api.demandaNoEstado(contrato.STATUS_INICIAL, demandas.valida());
-      return api.atualizarDemanda(token, id, { status: contrato.STATUS.EM_ANALISE });
+      return api.atualizarDemanda(token, id, { status: contrato.STATUS.EM_ANDAMENTO });
     }
 
     case 'A4': {
