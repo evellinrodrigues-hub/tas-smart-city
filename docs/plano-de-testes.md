@@ -94,7 +94,7 @@ Gerados da matriz em `data/matriz-autorizacao.js`.
 | A6 | Cidadão não promove a si próprio a gestor | 403 **e** perfil inalterado |
 | — | Pendências de contrato registradas, não esquecidas | 3 perguntas abertas impressas a cada execução |
 
-### 3.4 HU-06 Registro de demanda — 18 casos
+### 3.4 HU-06 Registro de demanda — 19 casos
 
 | ID | Cenário | Esperado |
 | :-- | :--- | :--- |

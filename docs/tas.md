@@ -69,7 +69,7 @@ Três, e cada um verificável em dezembro com evidência ao lado.
 
 | ID | Risco | Mitigação adotada |
 | :--- | :--- | :--- |
-| **R-01** | A exaustividade dos 25 pares da máquina de estados está no nível de serviço, não no de componente — onde custaria milissegundos. Custo de execução mais alto e dependência do ambiente no ar. | Assumido conscientemente: a regra vive no Flask e não há alternativa hoje. Verificar 2 ou 3 pares e chamar de cobertura deixaria **20 recusas** sem verificação. Item 1 do backlog reverte isso. |
+| **R-01** | A exaustividade dos 16 pares da máquina de estados está no nível de serviço, não no de componente — onde custaria milissegundos. Custo de execução mais alto e dependência do ambiente no ar. **Achado da execução contra o back-end real: nenhum dos 12 pares "recusados" é de fato recusado — não há validação de transição no código (`docs/relatorio-qualidade.md`, D-08).** | Assumido conscientemente: a regra vive no Flask e não há alternativa hoje. Verificar 2 ou 3 pares e chamar de cobertura deixaria **12 recusas** sem verificação — e foi exatamente a exaustividade que revelou que nenhuma delas é aplicada de verdade. Item 1 do backlog reverte isso para o nível de componente. |
 | **R-02** | **Payloads, códigos de erro, enum de status e limites de campo não estão documentados.** A documentação Postman é renderizada por JavaScript e retorna apenas o título. | **Confirmado por leitura do código-fonte real** (`schemas/*.py` do back-end), não mais hipótese do SUT didático. Marcado `[C]` em `data/contrato.js`, com a distinção explícita de que fatos de formato (`[C]`) nunca são usados para decidir regra de negócio (`[A]`/`[B]`) — ver cabeçalho do arquivo. Achado adicional: **não existe campo `error.code`** no back-end real (seção 3.2, `docs/relatorio-qualidade.md`). |
 | **R-03** | Vocabulário de status divergente entre fontes: o Material de Estudo usa `RECEIVED/UNDER_ANALYSIS/...`; os casos de teste da squad usam "Aberto"/"Em andamento"/"Resolvido". | **Resolvido para o back-end real**: o enum confirmado tem 4 estados (`PENDING/IN_PROGRESS/RESOLVED/REJECTED`), não 5. A tabela de transições entre eles continua sendo hipótese adaptada (nenhuma fonte documenta as regras de transição deste enum específico) — e o achado mais relevante da entrega é que **o back-end real não aplica nenhuma validação de transição** (`docs/relatorio-qualidade.md`, achado D-08). |
 | **R-04** | Três células da matriz de autorização não são decididas pelo README (ADMIN sobre demandas, exclusão por ADMIN, isolamento por setor entre gestores). | **Não inventadas.** Registradas em `data/matriz-autorizacao.js` e impressas a cada execução como pendência de contrato. |
@@ -95,12 +95,12 @@ Ordenado por **risco** e, dentro de cada faixa, por **custo crescente**.
 
 | # | Item | HU | Nível | Risco | Custo | Status |
 | :-- | :--- | :-- | :--- | :--- | :--- | :--- |
-| 1 | Extrair a regra de transição do handler Flask para módulo puro e cobrir os 25 pares em suíte Python de unidade | 13 | Unid | Alto | Baixo | **a fazer** — pedido a levar para Desenvolvimento |
+| 1 | Extrair a regra de transição do handler Flask para módulo puro e cobrir os 16 pares em suíte Python de unidade — **e implementar a validação, que hoje não existe (achado D-08)** | 13 | Unid | Alto | Baixo | **a fazer** — pedido a levar para Desenvolvimento |
 | 2 | Executar a suíte contra o back-end Flask real e classificar divergências | todas | API | Alto | Baixo | **feito** — ver `docs/relatorio-qualidade.md` |
 | 3 | Autorização por perfil (matriz) | 03 | API | Alto | Baixo | feito |
 | 4 | Registro de demanda: caminho feliz, validações e limites | 06 | API | Alto | Baixo | feito |
 | 5 | Autenticação, sessão, logout e refresh | 02 | API | Alto | Baixo | feito |
-| 6 | Máquina de estados: 25 pares | 13 | API | Alto | Médio | feito |
+| 6 | Máquina de estados: 16 pares | 13 | API | Alto | Médio | feito |
 | 7 | Exclusão por estado e por autoria | 14 | API | Alto | Baixo | feito |
 | 8 | Isolamento entre cidadãos (403 × 404) | 03 | API | Alto | Baixo | feito |
 | 9 | Cadastro e escalonamento de privilégio | 01 | API | Alto | Baixo | feito |
