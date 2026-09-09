@@ -41,7 +41,7 @@ test('HU-14 C41 cidadao exclui a propria demanda enquanto ela esta pendente', as
 test('HU-14 C42 cidadao nao exclui a propria demanda depois de ela sair de pendente', async () => {
   // A regra do README e "enquanto pendentes". Uma vez em analise, o gestor ja
   // esta trabalhando nela e o cidadao nao pode mais apagar o rastro.
-  const { id, tokenCidadao } = await api.demandaNoEstado(contrato.STATUS.EM_ANALISE, demandas.valida());
+  const { id, tokenCidadao } = await api.demandaNoEstado(contrato.STATUS.EM_ANDAMENTO, demandas.valida());
 
   const resposta = await api.excluirDemanda(tokenCidadao, id);
   assert.equal(

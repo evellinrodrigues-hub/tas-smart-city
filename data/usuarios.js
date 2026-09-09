@@ -16,9 +16,14 @@ const contrato = require('./contrato');
 const emailNovo = (prefixo = 'qa') =>
   `${prefixo}.${Date.now()}.${Math.random().toString(36).slice(2, 8)}@exemplo.com`;
 
-/** Cadastro que satisfaz todas as regras do contrato. */
+/**
+ * Cadastro que satisfaz todas as regras do contrato.
+ *
+ * Campo `username` (nao `name`): confirmado em schemas/user_schema.py do
+ * back-end real [C] em data/contrato.js.
+ */
 const novo = (extra = {}) => ({
-  name: 'Usuario de Teste QA',
+  username: 'Usuario de Teste QA',
   email: emailNovo(),
   password: 'SenhaValida123',
   ...extra,
@@ -62,10 +67,10 @@ const cadastrosInvalidos = () => [
     nome: 'nome ausente',
     corpo: (() => {
       const u = novo();
-      delete u.name;
+      delete u.username;
       return u;
     })(),
-    campoEsperado: 'name',
+    campoEsperado: 'username',
   },
 ];
 

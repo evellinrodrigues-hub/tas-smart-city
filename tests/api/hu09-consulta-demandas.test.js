@@ -86,13 +86,15 @@ test('HU-09 C30 pageSize limita a quantidade de itens devolvidos', async () => {
   await api.criarDemanda(token, demandas.valida());
   await api.criarDemanda(token, demandas.valida());
 
-  const { status, body } = await api.listarDemandas(token, { page: 1, pageSize: 1 });
+  // `per_page`: nome real do parametro (schemas/demandas_schema.py). O duplo
+  // de referencia ainda usa `pageSize`; mandamos os dois nomes.
+  const { status, body } = await api.listarDemandas(token, { page: 1, pageSize: 1, per_page: 1 });
 
   assert.equal(status, 200);
   assert.equal(
     insp.lista(body).length,
     1,
-    `pageSize=1 deveria devolver 1 item; devolveu ${insp.lista(body).length}`,
+    `pageSize/per_page=1 deveria devolver 1 item; devolveu ${insp.lista(body).length}`,
   );
 });
 
@@ -112,11 +114,11 @@ test('HU-12 C31 filtro por status devolve somente demandas naquele status', asyn
 test('HU-12 C32 filtro por categoria devolve somente aquela categoria', async () => {
   const token = await api.tokenDe(USUARIOS.cidadao);
   const categoria = contrato.CATEGORIAS[0];
-  await api.criarDemanda(token, demandas.com({ category: categoria }));
+  await api.criarDemanda(token, demandas.com({ categoria }));
 
-  const itens = await api.percorrerListagem(token, { category: categoria });
+  const itens = await api.percorrerListagem(token, { categoria });
   const fora = itens.filter(d => d.category !== categoria);
-  assert.deepEqual(fora.map(d => d.category), [], `o filtro category=${categoria} devolveu outras categorias`);
+  assert.deepEqual(fora.map(d => d.category), [], `o filtro categoria=${categoria} devolveu outras categorias`);
 });
 
 test('HU-09 C33 demanda inexistente responde 404', async () => {

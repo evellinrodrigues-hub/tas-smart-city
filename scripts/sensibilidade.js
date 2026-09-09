@@ -29,8 +29,8 @@ const BASE_URL = `http://localhost:${PORTA}`;
 const DEFEITOS = [
   {
     id: 'transicao-extra',
-    descricao: 'abre a transicao IN_PROGRESS -> REJECTED, que o contrato recusa',
-    casoEsperado: 'IN_PROGRESS -> REJECTED',
+    descricao: 'abre a transicao RESOLVED -> IN_PROGRESS, que o contrato recusa',
+    casoEsperado: 'RESOLVED -> IN_PROGRESS',
   },
   {
     id: 'role-do-cliente',
@@ -54,7 +54,7 @@ const DEFEITOS = [
   },
   {
     id: 'status-inicial',
-    descricao: 'demanda nasce em UNDER_ANALYSIS em vez do status inicial',
+    descricao: 'demanda nasce em IN_PROGRESS em vez do status inicial',
     casoEsperado: 'C19',
   },
 ];

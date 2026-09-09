@@ -50,9 +50,12 @@ test('HU-01 C15 e-mail ja cadastrado responde 409', async () => {
 
 test('HU-01 C16 cadastro nao permite ao proprio usuario escolher o perfil', async () => {
   // Escalonamento de privilegio: se o `role` do corpo for aceito, qualquer
-  // pessoa vira ADMIN pela tela publica de cadastro. Risco maximo, e
-  // completamente invisivel pela interface.
-  const novo = usuarios.novo({ role: contrato.PERFIS.ADMIN });
+  // pessoa vira GESTOR pela tela publica de cadastro. Risco maximo, e
+  // completamente invisivel pela interface. Usa GESTOR, e nao ADMIN: o
+  // schema real do back-end so aceita 'cidadao'/'gestor'/'servidor' como
+  // valor de entrada em `role` - 'admin' e rejeitado antes mesmo de chegar
+  // na regra de negocio que este caso quer testar. [C] em data/contrato.js.
+  const novo = usuarios.novo({ role: contrato.PERFIS.GESTOR });
   const cadastro = await api.registrar(novo);
 
   assert.equal(cadastro.status, 201, 'preparacao: o cadastro precisava ter sido aceito');
@@ -64,7 +67,7 @@ test('HU-01 C16 cadastro nao permite ao proprio usuario escolher o perfil', asyn
   assert.equal(
     perfil,
     contrato.PERFIS.CIDADAO,
-    `ESCALONAMENTO DE PRIVILEGIO: o corpo do cadastro pediu ${contrato.PERFIS.ADMIN} e a conta ` +
+    `ESCALONAMENTO DE PRIVILEGIO: o corpo do cadastro pediu ${contrato.PERFIS.GESTOR} e a conta ` +
     `foi criada como ${perfil}. O perfil deve ser atribuido pelo servidor.`,
   );
 });
